@@ -18,7 +18,6 @@
 .navbarList__link {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border-radius: 40px;
 }
 .navbarList__link:hover {
@@ -31,7 +30,11 @@
   justify-self: center;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
+}
+.logo__link {
+  display: block; 
+  height: 50px;
 }
 .profile {
   margin-left: auto;
