@@ -22,5 +22,7 @@ li {
 }
 .outerWrapper {
   width: 1240px;
+  display: flex;
+  gap: 40px;
   margin: 0 auto;
 }

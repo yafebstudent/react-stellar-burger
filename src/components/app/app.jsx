@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './App.module.css';
-import { data } from '../../utils/data';
+import data from '../../utils/data';
 import getIngredientsData from '../../utils/api/getIngredientsData';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
 const App = () => {
   const [ingredientsData, setIngredientsData] = useState(null);
@@ -37,6 +38,7 @@ const App = () => {
       <AppHeader />
       <div className="outerWrapper">
         {ingredientsData && <BurgerIngredients ingredientsData={ingredientsData} />}
+        {ingredientsData && <BurgerConstructor ingredientsData={ingredientsData} />}
       </div>
     </div>
   );
