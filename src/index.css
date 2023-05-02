@@ -6,6 +6,10 @@
   border: 0;
   box-sizing: border-box;
 }
+html {
+  height: 100vh;
+  overflow: hidden;
+}
 body {
   margin: 0;
 }
@@ -15,4 +19,8 @@ a {
 }
 li {
   list-style: none;
+}
+.outerWrapper {
+  width: 1240px;
+  margin: 0 auto;
 }
