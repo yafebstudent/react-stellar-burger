@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerIngredients.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 const BurgerIngredients = (props) => {
   const [currentTab, setCurrentTab] = React.useState('buns');
   const { ingredientsData } = props;
+  const [ingredientDetailsModalActive, setIngredientDetailsModalActive] = useState(false);
+  const [activeIngredientId, setactiveIngredientId] = useState(null);
+  const getActiveIngredientData = () =>
+    ingredientsData.find((ingredientData) => ingredientData._id === activeIngredientId);
 
   return (
     <section className={`${styles.burgerIngredients} mb-10`}>
@@ -27,7 +33,12 @@ const BurgerIngredients = (props) => {
           {ingredientsData.map(
             (ingredientData) =>
               ingredientData.type === 'bun' && (
-                <BurgerIngredient key={ingredientData._id} ingredientData={ingredientData} />
+                <BurgerIngredient
+                  key={ingredientData._id}
+                  ingredientData={ingredientData}
+                  setIngredientDetailsModalActive={setIngredientDetailsModalActive}
+                  setactiveIngredientId={setactiveIngredientId}
+                />
               )
           )}
         </ul>
@@ -36,7 +47,12 @@ const BurgerIngredients = (props) => {
           {ingredientsData.map(
             (ingredientData) =>
               ingredientData.type === 'sauce' && (
-                <BurgerIngredient key={ingredientData._id} ingredientData={ingredientData} />
+                <BurgerIngredient
+                  key={ingredientData._id}
+                  ingredientData={ingredientData}
+                  setIngredientDetailsModalActive={setIngredientDetailsModalActive}
+                  setactiveIngredientId={setactiveIngredientId}
+                />
               )
           )}
         </ul>
@@ -45,11 +61,24 @@ const BurgerIngredients = (props) => {
           {ingredientsData.map(
             (ingredientData) =>
               ingredientData.type === 'main' && (
-                <BurgerIngredient key={ingredientData._id} ingredientData={ingredientData} />
+                <BurgerIngredient
+                  key={ingredientData._id}
+                  ingredientData={ingredientData}
+                  setIngredientDetailsModalActive={setIngredientDetailsModalActive}
+                  setactiveIngredientId={setactiveIngredientId}
+                />
               )
           )}
         </ul>
       </div>
+      <Modal
+        modalActive={ingredientDetailsModalActive}
+        setModalActive={setIngredientDetailsModalActive}
+      >
+        {activeIngredientId && (
+          <IngredientDetails activeIngredientData={getActiveIngredientData()} />
+        )}
+      </Modal>
     </section>
   );
 };

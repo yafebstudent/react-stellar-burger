@@ -1,5 +1,11 @@
 .burgerIngredientsListItem {
   width: 272px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 .burgerIngredientsListItem:hover .image {
   scale: 1.1;
@@ -7,14 +13,6 @@
 .burgerIngredientsListItem:hover .price,
 .burgerIngredientsListItem:hover .name {
   color: #8585AD;
-}
-
-.burgerIngredientLink {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 .image {
   width: 240px;
