@@ -4,7 +4,7 @@ import { ModalOverlayPropType } from '../../utils/prop-types';
 
 const ModalOverlay = (props) => {
   const { modalActive } = props;
-  const activeModalClassName = modalActive ? styles.active : '';
+  const activeModalClassName = modalActive ? `${styles.active} popup_opened` : '';
 
   return <div className={`${styles.modalOverlay} ${activeModalClassName}`} />;
 };
