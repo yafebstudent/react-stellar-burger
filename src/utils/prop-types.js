@@ -17,6 +17,9 @@ export const ModalPropType = {
   setModalActive: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
 };
+export const ModalOverlayPropType = {
+  modalActive: PropTypes.bool.isRequired,
+};
 export const OrderDetailsPropType = {
   oderId: PropTypes.string.isRequired,
 };
