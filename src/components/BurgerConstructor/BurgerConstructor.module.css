@@ -1,12 +1,32 @@
-.burgerConstructor__list {
+.burgerConstructor__mainList {
   width: 600px;
   display: flex;
-  gap: 10px;
+  gap: 16px;
   flex-direction: column;
   justify-content: flex-end;
 }
+.nestedList {
+  height: 36vh;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.nestedList::-webkit-scrollbar {
+  width: 8px;
+  height: 464px;
+  background-color: #2f2f37;
+}
+.nestedList::-webkit-scrollbar-thumb {
+  height: 292px;
+  background-color: #8585ad;
+}
+.nestedList::-webkit-scrollbar-thumb:hover {
+  background-color: #636380;
+}
 .burgerIngredient {
   display: flex;
+  gap: 8px;
   justify-content: flex-end;
   align-items: center;
 }

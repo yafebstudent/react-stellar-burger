@@ -12,35 +12,45 @@ const BurgerConstructor = (props) => {
 
   return (
     <section className={styles.burgerConstructor}>
-      <ul className={`${styles.burgerConstructor__list} mt-25 mb-10`}>
-        <li className={styles.burgerIngredient}>
+      <ul className={`${styles.burgerConstructor__mainList} mt-25 mb-10`}>
+        <li className={`${styles.burgerIngredient} mr-4`}>
           <ConstructorElement
             type="top"
             isLocked
             text={`${ingredientsData[0].name} (верх)`}
-            price={200}
+            price={ingredientsData[0].price}
             thumbnail={ingredientsData[0].image_mobile}
           />
         </li>
-        <li className={styles.burgerIngredient}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Краторная булка N-200i (верх)"
-            price={50}
-            thumbnail={ingredientsData[0].image_mobile}
-          />
+        <li>
+          <ul className={styles.nestedList}>
+            {ingredientsData.map(
+              (ingredientData, index, array) =>
+                index > 0 &&
+                index < array.length && (
+                  <li key={ingredientData._id} className={`${styles.burgerIngredient} mr-2`}>
+                    <DragIcon type={ingredientData.type} />
+                    <ConstructorElement
+                      text={ingredientData.name}
+                      price={ingredientData.price}
+                      thumbnail={ingredientData.image_mobile}
+                    />
+                  </li>
+                )
+            )}
+          </ul>
         </li>
-        <li className={styles.burgerIngredient}>
+        <li className={`${styles.burgerIngredient} mr-4`}>
           <ConstructorElement
             type="bottom"
             isLocked
-            text="Краторная булка N-200i (низ)"
-            price={200}
+            text={`${ingredientsData[0].name} (низ)`}
+            price={ingredientsData[0].price}
             thumbnail={ingredientsData[0].image_mobile}
           />
         </li>
       </ul>
-      <div className={`${styles.burgerConstructor__checkout}`}>
+      <div className={`${styles.burgerConstructor__checkout} mr-4`}>
         <div className={`${styles.totalPrice} mr-10`}>
           <span className="text text_type_digits-medium mr-2">610</span>
           <figure className={styles.currencyIcon}>

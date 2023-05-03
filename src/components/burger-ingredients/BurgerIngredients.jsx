@@ -8,7 +8,7 @@ const BurgerIngredients = (props) => {
   const { ingredientsData } = props;
 
   return (
-    <section className={`${styles.burgerIngredients}`}>
+    <section className={`${styles.burgerIngredients} mb-10`}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={`${styles.burgerIngredients__tabs} mb-10`}>
         <Tab value="buns" active={currentTab === 'buns'} onClick={setCurrentTab}>
