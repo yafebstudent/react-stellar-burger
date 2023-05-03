@@ -1,54 +1,14 @@
 import PropTypes from 'prop-types';
+import ingredientType from './types';
 
 export const ingredientDataPropType = {
-  ingredientData: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-    _id: PropTypes.string.isRequired,
-  }),
+  ingredientData: ingredientType,
 };
 export const ingredientsDataPropType = {
-  ingredientsData: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-      _id: PropTypes.string.isRequired,
-    })
-  ),
+  ingredientsData: PropTypes.arrayOf(ingredientType),
 };
 export const BurgerIngredientPropType = {
-  ingredientData: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-    _id: PropTypes.string.isRequired,
-  }),
+  ingredientData: ingredientType,
   setIngredientDetailsModalActive: PropTypes.func.isRequired,
   setactiveIngredientId: PropTypes.func.isRequired,
 };
