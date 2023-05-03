@@ -1,26 +1,16 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
 import { ModalPropType } from '../../utils/prop-types';
+import usePopupClose from '../../hooks/usePopupClose';
 
 const Modal = (props) => {
   const { modalActive, setModalActive, children } = props;
   const activeModalClassName = modalActive ? styles.active : '';
   const portal = useMemo(() => document.getElementById('portal'), []);
-
-  useEffect(() => {
-    const closeModal = (e) => {
-      if (e.key === 'Escape') {
-        setModalActive(false);
-      }
-    };
-
-    window.addEventListener('keydown', closeModal);
-
-    return () => window.removeEventListener('keydown', closeModal);
-  }, [setModalActive]);
+  usePopupClose(modalActive, () => setModalActive(false));
 
   return createPortal(
     <>
