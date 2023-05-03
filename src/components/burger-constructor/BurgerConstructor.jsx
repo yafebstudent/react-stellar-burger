@@ -8,6 +8,7 @@ import {
 import styles from './BurgerConstructor.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
+import oderId from '../../utils/data';
 
 const BurgerConstructor = (props) => {
   const { ingredientsData } = props;
@@ -72,7 +73,7 @@ const BurgerConstructor = (props) => {
         </Button>
       </div>
       <Modal modalActive={orderDetailsModalActive} setModalActive={setOrderDetailsModalActive}>
-        <OrderDetails />
+        <OrderDetails oderId={oderId} />
       </Modal>
     </section>
   );
