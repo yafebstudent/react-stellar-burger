@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -6,9 +6,12 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
+import Modal from '../Modal/Modal';
+import OrderDetails from '../order-details/OrderDetails';
 
 const BurgerConstructor = (props) => {
   const { ingredientsData } = props;
+  const [orderDetailsModalActive, setOrderDetailsModalActive] = useState(false);
 
   return (
     <section className={styles.burgerConstructor}>
@@ -57,10 +60,20 @@ const BurgerConstructor = (props) => {
             <CurrencyIcon type="primary" />
           </figure>
         </div>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          onClick={() => {
+            setOrderDetailsModalActive(true);
+          }}
+        >
           Оформить заказ
         </Button>
       </div>
+      <Modal modalActive={orderDetailsModalActive} setModalActive={setOrderDetailsModalActive}>
+        <OrderDetails />
+      </Modal>
     </section>
   );
 };
