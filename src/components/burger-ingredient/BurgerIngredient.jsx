@@ -1,6 +1,7 @@
 import React from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerIngredient.module.css';
+import { BurgerIngredientPropType } from '../../utils/prop-types';
 
 const BurgerIngredient = (props) => {
   const { ingredientData, setIngredientDetailsModalActive, setactiveIngredientId } = props;
@@ -31,5 +32,7 @@ const BurgerIngredient = (props) => {
     </li>
   );
 };
+
+BurgerIngredient.propTypes = BurgerIngredientPropType;
 
 export default BurgerIngredient;

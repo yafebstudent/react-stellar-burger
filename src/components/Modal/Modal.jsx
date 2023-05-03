@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
+import { ModalPropType } from '../../utils/prop-types';
 
 const Modal = (props) => {
   const { modalActive, setModalActive, children } = props;
@@ -44,5 +45,7 @@ const Modal = (props) => {
     portal
   );
 };
+
+Modal.propTypes = ModalPropType;
 
 export default Modal;

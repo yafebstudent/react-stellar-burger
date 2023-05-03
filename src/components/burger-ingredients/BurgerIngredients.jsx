@@ -4,6 +4,7 @@ import styles from './BurgerIngredients.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+import { ingredientsDataPropType } from '../../utils/prop-types';
 
 const BurgerIngredients = (props) => {
   const [currentTab, setCurrentTab] = React.useState('buns');
@@ -71,16 +72,20 @@ const BurgerIngredients = (props) => {
           )}
         </ul>
       </div>
-      <Modal
-        modalActive={ingredientDetailsModalActive}
-        setModalActive={setIngredientDetailsModalActive}
-      >
-        {activeIngredientId && (
-          <IngredientDetails activeIngredientData={getActiveIngredientData()} />
-        )}
-      </Modal>
+      {ingredientDetailsModalActive && (
+        <Modal
+          modalActive={ingredientDetailsModalActive}
+          setModalActive={setIngredientDetailsModalActive}
+        >
+          {activeIngredientId && (
+            <IngredientDetails activeIngredientData={getActiveIngredientData()} />
+          )}
+        </Modal>
+      )}
     </section>
   );
 };
+
+BurgerIngredients.propTypes = ingredientsDataPropType;
 
 export default BurgerIngredients;

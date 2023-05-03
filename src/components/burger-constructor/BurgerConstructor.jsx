@@ -9,6 +9,7 @@ import styles from './BurgerConstructor.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
 import oderId from '../../utils/data';
+import { ingredientsDataPropType } from '../../utils/prop-types';
 
 const BurgerConstructor = (props) => {
   const { ingredientsData } = props;
@@ -72,11 +73,15 @@ const BurgerConstructor = (props) => {
           Оформить заказ
         </Button>
       </div>
-      <Modal modalActive={orderDetailsModalActive} setModalActive={setOrderDetailsModalActive}>
-        <OrderDetails oderId={oderId} />
-      </Modal>
+      {orderDetailsModalActive && (
+        <Modal modalActive={orderDetailsModalActive} setModalActive={setOrderDetailsModalActive}>
+          {oderId && <OrderDetails oderId={oderId} />}
+        </Modal>
+      )}
     </section>
   );
 };
+
+BurgerConstructor.propTypes = ingredientsDataPropType;
 
 export default BurgerConstructor;

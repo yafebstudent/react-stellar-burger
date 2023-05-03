@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './OrderDetails.module.css';
 import checkoutDoneImage from '../../images/checkout-done.gif';
+import { OrderDetailsPropType } from '../../utils/prop-types';
 
 const OrderDetails = (props) => {
   const { oderId } = props;
@@ -19,5 +20,7 @@ const OrderDetails = (props) => {
     </div>
   );
 };
+
+OrderDetails.propTypes = OrderDetailsPropType;
 
 export default OrderDetails;
