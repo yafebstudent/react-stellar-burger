@@ -1,0 +1,19 @@
+.ingredientDetails {
+  width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ingredientDetails__title {
+  width: 100%;
+  text-align: left;
+}
+.nutritionalValueList {
+  display: flex;
+  color: #8585AD;
+}
+.nutritionalValueList__item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}

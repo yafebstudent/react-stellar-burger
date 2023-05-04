@@ -1,3 +1,28 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100vh;
+  overflow: hidden;
+}
 body {
   margin: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+li {
+  list-style: none;
+}
+.outerWrapper {
+  width: 1240px;
+  display: flex;
+  gap: 40px;
+  margin: 0 auto;
 }
