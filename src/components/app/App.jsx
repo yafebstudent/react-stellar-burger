@@ -23,10 +23,12 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <div className="outerWrapper">
-        {ingredientsData && <BurgerIngredients ingredientsData={ingredientsData} />}
-        {ingredientsData && <BurgerConstructor ingredientsData={ingredientsData} />}
-      </div>
+      <main>
+        <div className="outerWrapper">
+          {ingredientsData && <BurgerIngredients ingredientsData={ingredientsData} />}
+          {ingredientsData && <BurgerConstructor ingredientsData={ingredientsData} />}
+        </div>
+      </main>
     </div>
   );
 };
