@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -10,10 +10,11 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
 import oderId from '../../utils/data';
 import { ingredientsDataPropType } from '../../utils/prop-types';
+import useModal from '../../hooks/useModal';
 
 const BurgerConstructor = (props) => {
   const { ingredientsData } = props;
-  const [orderDetailsModalActive, setOrderDetailsModalActive] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <section className={styles.burgerConstructor}>
@@ -62,19 +63,12 @@ const BurgerConstructor = (props) => {
             <CurrencyIcon type="primary" />
           </figure>
         </div>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="medium"
-          onClick={() => {
-            setOrderDetailsModalActive(true);
-          }}
-        >
+        <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
           Оформить заказ
         </Button>
       </div>
-      {orderDetailsModalActive && (
-        <Modal modalActive={orderDetailsModalActive} setModalActive={setOrderDetailsModalActive}>
+      {isModalOpen && (
+        <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
           {oderId && <OrderDetails oderId={oderId} />}
         </Modal>
       )}

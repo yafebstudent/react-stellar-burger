@@ -4,9 +4,9 @@ import styles from './BurgerIngredient.module.css';
 import { BurgerIngredientPropType } from '../../utils/prop-types';
 
 const BurgerIngredient = (props) => {
-  const { ingredientData, setIngredientDetailsModalActive, setactiveIngredientId } = props;
+  const { ingredientData, openModal, setactiveIngredientId } = props;
   const burgerIngredientClickHandler = () => {
-    setIngredientDetailsModalActive(true);
+    openModal();
     setactiveIngredientId(ingredientData._id);
   };
 

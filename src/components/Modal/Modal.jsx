@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Modal.module.css';
@@ -8,9 +8,9 @@ import usePopupClose from '../../hooks/usePopupClose';
 
 const portal = document.getElementById('portal');
 const Modal = (props) => {
-  const { modalActive, setModalActive, children } = props;
-  const activeModalClassName = modalActive ? styles.active : '';
-  usePopupClose(modalActive, () => setModalActive(false));
+  const { isModalOpen, closeModal, children } = props;
+  const activeModalClassName = isModalOpen ? styles.active : '';
+  usePopupClose(isModalOpen, () => closeModal());
 
   return createPortal(
     <>
@@ -22,15 +22,11 @@ const Modal = (props) => {
         tabIndex={0}
       >
         {children}
-        <button
-          className={`${styles.closeButton} mt-15 mr-10`}
-          type="button"
-          onClick={() => setModalActive(false)}
-        >
+        <button className={`${styles.closeButton} mt-15 mr-10`} type="button" onClick={closeModal}>
           <CloseIcon type="primary" />
         </button>
       </div>
-      <ModalOverlay modalActive={modalActive} setModalActive={setModalActive} />
+      <ModalOverlay isModalOpen={isModalOpen} />
     </>,
     portal
   );

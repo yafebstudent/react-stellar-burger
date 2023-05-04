@@ -5,11 +5,12 @@ import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import { ingredientsDataPropType } from '../../utils/prop-types';
+import useModal from '../../hooks/useModal';
 
 const BurgerIngredients = (props) => {
   const [currentTab, setCurrentTab] = React.useState('buns');
   const { ingredientsData } = props;
-  const [ingredientDetailsModalActive, setIngredientDetailsModalActive] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [activeIngredientId, setactiveIngredientId] = useState(null);
   const getActiveIngredientData = () =>
     ingredientsData.find((ingredientData) => ingredientData._id === activeIngredientId);
@@ -37,7 +38,7 @@ const BurgerIngredients = (props) => {
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
-                  setIngredientDetailsModalActive={setIngredientDetailsModalActive}
+                  openModal={openModal}
                   setactiveIngredientId={setactiveIngredientId}
                 />
               )
@@ -51,7 +52,7 @@ const BurgerIngredients = (props) => {
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
-                  setIngredientDetailsModalActive={setIngredientDetailsModalActive}
+                  openModal={openModal}
                   setactiveIngredientId={setactiveIngredientId}
                 />
               )
@@ -65,18 +66,15 @@ const BurgerIngredients = (props) => {
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
-                  setIngredientDetailsModalActive={setIngredientDetailsModalActive}
+                  openModal={openModal}
                   setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
       </div>
-      {ingredientDetailsModalActive && (
-        <Modal
-          modalActive={ingredientDetailsModalActive}
-          setModalActive={setIngredientDetailsModalActive}
-        >
+      {isModalOpen && (
+        <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
           {activeIngredientId && (
             <IngredientDetails activeIngredientData={getActiveIngredientData()} />
           )}
