@@ -6,10 +6,10 @@ import ModalOverlay from '../modal-overlay/ModalOverlay';
 import { ModalPropType } from '../../utils/prop-types';
 import usePopupClose from '../../hooks/usePopupClose';
 
+const portal = document.getElementById('portal');
 const Modal = (props) => {
   const { modalActive, setModalActive, children } = props;
   const activeModalClassName = modalActive ? styles.active : '';
-  const portal = useMemo(() => document.getElementById('portal'), []);
   usePopupClose(modalActive, () => setModalActive(false));
 
   return createPortal(
