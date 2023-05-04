@@ -5,7 +5,7 @@ export const ingredientDataPropType = {
   ingredientData: ingredientType,
 };
 export const ingredientsDataPropType = {
-  ingredientsData: PropTypes.arrayOf(ingredientType),
+  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
 };
 export const BurgerIngredientPropType = {
   ingredientData: ingredientType,
@@ -19,6 +19,9 @@ export const ModalPropType = {
 };
 export const ModalOverlayPropType = {
   modalActive: PropTypes.bool.isRequired,
+};
+export const IngredientDetailsPropType = {
+  activeIngredientData: ingredientType,
 };
 export const OrderDetailsPropType = {
   oderId: PropTypes.string.isRequired,

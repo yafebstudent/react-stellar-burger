@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './IngredientDetails.module.css';
-import { ingredientDataPropType } from '../../utils/prop-types';
+import { IngredientDetailsPropType } from '../../utils/prop-types';
 
 const IngredientDetails = (props) => {
   const { activeIngredientData } = props;
@@ -46,6 +46,6 @@ const IngredientDetails = (props) => {
   );
 };
 
-IngredientDetails.propTypes = ingredientDataPropType;
+IngredientDetails.propTypes = IngredientDetailsPropType;
 
 export default IngredientDetails;

@@ -11,8 +11,8 @@ const ingredientType = PropTypes.shape({
   price: PropTypes.number.isRequired,
   proteins: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
-  __v: PropTypes.number,
+  __v: PropTypes.number.isRequired,
   _id: PropTypes.string.isRequired,
-});
+}).isRequired;
 
 export default ingredientType;
