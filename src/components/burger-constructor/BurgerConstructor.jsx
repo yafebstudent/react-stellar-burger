@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -49,6 +49,16 @@ const BurgerConstructor = () => {
   const handleConstructorElementClose = (data) => {
     dispatch(deleteIngredientData(data));
   };
+  const totalCost = useMemo(() => {
+    const bunsCount = 2;
+
+    return burgerConstructorIngredientsData.reduce((sum, ingredientData) => {
+      if (ingredientData.type === 'bun') {
+        return sum + ingredientData.price * bunsCount;
+      }
+      return sum + ingredientData.price;
+    }, 0);
+  }, [burgerConstructorIngredientsData]);
 
   return (
     <section
@@ -131,7 +141,7 @@ const BurgerConstructor = () => {
       </ul>
       <div className={`${styles.burgerConstructor__checkout} mr-4`}>
         <div className={`${styles.totalPrice} mr-10`}>
-          <span className="text text_type_digits-medium mr-2">610</span>
+          <span className="text text_type_digits-medium mr-2">{totalCost}</span>
           <figure className={styles.currencyIcon}>
             <CurrencyIcon type="primary" />
           </figure>
