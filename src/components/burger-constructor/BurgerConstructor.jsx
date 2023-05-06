@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -19,10 +18,11 @@ import {
 import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 import {
   addIngredientData,
-  deleteIngredientData,
+  addSortedIngredients,
 } from '../../services/burgerConstructorIngredientsDataSlice';
 import burgerIcon from '../../images/burger.png';
 import LoadingSpinner from '../loading-spinner/LoadingSpinner';
+import BurgerConstructorToppingElement from '../burger-constructor-topping-element/BurgerConstructorToppingElement';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -70,9 +70,6 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const handleConstructorElementClose = (data) => {
-    dispatch(deleteIngredientData(data));
-  };
   const totalCost = useMemo(() => {
     const bunsCount = 2;
 
@@ -83,6 +80,26 @@ const BurgerConstructor = () => {
       return sum + ingredientData.price;
     }, 0);
   }, [burgerConstructorIngredientsData]);
+
+  const swapIngredients = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragItem = burgerConstructorIngredientsData[dragIndex];
+
+      if (dragItem) {
+        const getSortedIngredientsData = () => {
+          const coppiedStateArray = [...burgerConstructorIngredientsData];
+          const prevItem = coppiedStateArray.splice(hoverIndex, 1, dragItem);
+
+          coppiedStateArray.splice(dragIndex, 1, prevItem[0]);
+
+          return coppiedStateArray;
+        };
+
+        dispatch(addSortedIngredients(getSortedIngredientsData()));
+      }
+    },
+    [burgerConstructorIngredientsData, dispatch]
+  );
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -121,17 +138,14 @@ const BurgerConstructor = () => {
           <li>
             <ul className={styles.nestedList}>
               {burgerConstructorIngredientsData.map(
-                (ingredientData) =>
+                (ingredientData, index) =>
                   ingredientData.type !== 'bun' && (
-                    <li className={`${styles.burgerIngredient} mr-2`} key={ingredientData.listKey}>
-                      <DragIcon type={ingredientData.type} />
-                      <ConstructorElement
-                        text={ingredientData.name}
-                        price={ingredientData.price}
-                        thumbnail={ingredientData.image_mobile}
-                        handleClose={() => handleConstructorElementClose(ingredientData)}
-                      />
-                    </li>
+                    <BurgerConstructorToppingElement
+                      ingredientData={ingredientData}
+                      key={ingredientData.listKey}
+                      index={index}
+                      swapIngredients={swapIngredients}
+                    />
                   )
               )}
             </ul>

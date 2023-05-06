@@ -13,3 +13,8 @@ export const ModalPropType = {
 export const ModalOverlayPropType = {
   isModalOpen: PropTypes.bool.isRequired,
 };
+export const BurgerConstructorToppingElementPropType = {
+  ingredientData: ingredientType,
+  index: PropTypes.number.isRequired,
+  swapIngredients: PropTypes.func.isRequired,
+};

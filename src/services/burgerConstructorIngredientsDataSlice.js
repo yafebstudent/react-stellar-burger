@@ -31,14 +31,19 @@ const burgerConstructorIngredientsDataSlice = createSlice({
       }
     },
     deleteIngredientData: (state, action) => {
-      console.log(action.payload);
       const index = state.burgerConstructorIngredientsData.indexOf(action.payload);
 
       state.burgerConstructorIngredientsData.splice(index, 1);
     },
+    addSortedIngredients: (state, action) => {
+      state.burgerConstructorIngredientsData.push({
+        ...action.payload,
+        listKey: window.crypto.randomUUID(),
+      });
+    },
   },
 });
 
-export const { addIngredientData, deleteIngredientData } =
+export const { addIngredientData, deleteIngredientData, addSortedIngredients } =
   burgerConstructorIngredientsDataSlice.actions;
 export default burgerConstructorIngredientsDataSlice.reducer;
