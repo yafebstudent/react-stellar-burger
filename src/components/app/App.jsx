@@ -1,4 +1,6 @@
 import React from 'react';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
@@ -14,10 +16,10 @@ const App = () => {
   if (isLoading || isFetching) content = <LoadingSpinner />;
   if (isSuccess) {
     content = (
-      <>
+      <DndProvider backend={HTML5Backend}>
         <BurgerIngredients />
         <BurgerConstructor />
-      </>
+      </DndProvider>
     );
   }
 
