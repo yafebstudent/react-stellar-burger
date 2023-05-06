@@ -6,17 +6,17 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { useDrop } from 'react-dnd';
+import { useDrop, DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './BurgerConstructor.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
-import oderId from '../../utils/data';
 import useModal from '../../hooks/useModal';
 import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
 } from '../../services/ingredientsDataAPI';
-import { setOrderDetailsData } from '../../services/orderDetailsDataSlice';
+import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 import {
   addIngredientData,
   deleteIngredientData,
@@ -36,7 +36,9 @@ const BurgerConstructor = () => {
     openModal();
     getOrderData(
       JSON.stringify({
-        ingredients: ['643d69a5c3f7b9001cfa0945'],
+        ingredients: [
+          ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
+        ],
       })
     )
       .then((data) => {
@@ -47,10 +49,14 @@ const BurgerConstructor = () => {
         console.error(`An error has occurred with order data! ${error.message}`);
       });
   };
+  const modalCloseHandler = () => {
+    closeModal();
+    dispatch(clearOrderDetailsData());
+  };
 
   const getIngredientDataById = (id) =>
     ingredientsResponseData.data.find((ingredientData) => ingredientData._id === id);
-  const [{ isHover }, dropTargetRef] = useDrop({
+  const [{ isHover: isConstructorHover }, constructorRef] = useDrop({
     accept: 'ingredientItem',
     drop(item) {
       dispatch(
@@ -63,6 +69,7 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
   });
+
   const handleConstructorElementClose = (data) => {
     dispatch(deleteIngredientData(data));
   };
@@ -78,106 +85,108 @@ const BurgerConstructor = () => {
   }, [burgerConstructorIngredientsData]);
 
   return (
-    <section
-      className={`${styles.burgerConstructor} ${isHover && styles.isDragHover}`}
-      ref={dropTargetRef}
-    >
-      <ul className={`${styles.burgerConstructor__mainList} mt-25 mb-10`}>
-        <li className={`${styles.burgerIngredient} mr-4`}>
-          {burgerConstructorIngredientsData.filter(
-            (ingredientsData) => ingredientsData.type === 'bun'
-          ).length === 0 ? (
-            <ConstructorElement
-              type="top"
-              isLocked
-              text="Перетяните булочку сюда (верх)"
-              price="0"
-              thumbnail={burgerIcon}
-            />
-          ) : (
-            burgerConstructorIngredientsData.map(
-              (ingredientData) =>
-                ingredientData.type === 'bun' && (
-                  <ConstructorElement
-                    type="top"
-                    isLocked
-                    text={`${ingredientData.name} (верх)`}
-                    price={ingredientData.price}
-                    thumbnail={ingredientData.image_mobile}
-                    key={`${ingredientData.listKey}top`}
-                  />
-                )
-            )
-          )}
-        </li>
-        <li>
-          <ul className={styles.nestedList}>
-            {burgerConstructorIngredientsData.map(
-              (ingredientData) =>
-                ingredientData.type !== 'bun' && (
-                  <li className={`${styles.burgerIngredient} mr-2`} key={ingredientData.listKey}>
-                    <DragIcon type={ingredientData.type} />
+    <DndProvider backend={HTML5Backend}>
+      <section
+        className={`${styles.burgerConstructor} ${isConstructorHover && styles.isDragHover}`}
+        ref={constructorRef}
+      >
+        <ul className={`${styles.burgerConstructor__mainList} mt-25 mb-10`}>
+          <li className={`${styles.burgerIngredient} mr-4`}>
+            {burgerConstructorIngredientsData.filter(
+              (ingredientsData) => ingredientsData.type === 'bun'
+            ).length === 0 ? (
+              <ConstructorElement
+                type="top"
+                isLocked
+                text="Перетяните булочку сюда (верх)"
+                price="0"
+                thumbnail={burgerIcon}
+              />
+            ) : (
+              burgerConstructorIngredientsData.map(
+                (ingredientData) =>
+                  ingredientData.type === 'bun' && (
                     <ConstructorElement
-                      text={ingredientData.name}
+                      type="top"
+                      isLocked
+                      text={`${ingredientData.name} (верх)`}
                       price={ingredientData.price}
                       thumbnail={ingredientData.image_mobile}
-                      handleClose={() => handleConstructorElementClose(ingredientData)}
+                      key={`${ingredientData.listKey}top`}
                     />
-                  </li>
-                )
+                  )
+              )
             )}
-          </ul>
-        </li>
-        <li className={`${styles.burgerIngredient} mr-4`}>
-          {burgerConstructorIngredientsData.filter(
-            (ingredientsData) => ingredientsData.type === 'bun'
-          ).length === 0 ? (
-            <ConstructorElement
-              type="bottom"
-              isLocked
-              text="Перетяните булочку сюда (низ)"
-              price="0"
-              thumbnail={burgerIcon}
-            />
-          ) : (
-            burgerConstructorIngredientsData.map(
-              (ingredientData) =>
-                ingredientData.type === 'bun' && (
-                  <ConstructorElement
-                    type="bottom"
-                    isLocked
-                    text={`${ingredientData.name} (низ)`}
-                    price={ingredientData.price}
-                    thumbnail={ingredientData.image_mobile}
-                    key={`${ingredientData.listKey}bottom`}
-                  />
-                )
-            )
-          )}
-        </li>
-      </ul>
-      <div className={`${styles.burgerConstructor__checkout} mr-4`}>
-        <div className={`${styles.totalPrice} mr-10`}>
-          <span className="text text_type_digits-medium mr-2">{totalCost}</span>
-          <figure className={styles.currencyIcon}>
-            <CurrencyIcon type="primary" />
-          </figure>
+          </li>
+          <li>
+            <ul className={styles.nestedList}>
+              {burgerConstructorIngredientsData.map(
+                (ingredientData) =>
+                  ingredientData.type !== 'bun' && (
+                    <li className={`${styles.burgerIngredient} mr-2`} key={ingredientData.listKey}>
+                      <DragIcon type={ingredientData.type} />
+                      <ConstructorElement
+                        text={ingredientData.name}
+                        price={ingredientData.price}
+                        thumbnail={ingredientData.image_mobile}
+                        handleClose={() => handleConstructorElementClose(ingredientData)}
+                      />
+                    </li>
+                  )
+              )}
+            </ul>
+          </li>
+          <li className={`${styles.burgerIngredient} mr-4`}>
+            {burgerConstructorIngredientsData.filter(
+              (ingredientsData) => ingredientsData.type === 'bun'
+            ).length === 0 ? (
+              <ConstructorElement
+                type="bottom"
+                isLocked
+                text="Перетяните булочку сюда (низ)"
+                price="0"
+                thumbnail={burgerIcon}
+              />
+            ) : (
+              burgerConstructorIngredientsData.map(
+                (ingredientData) =>
+                  ingredientData.type === 'bun' && (
+                    <ConstructorElement
+                      type="bottom"
+                      isLocked
+                      text={`${ingredientData.name} (низ)`}
+                      price={ingredientData.price}
+                      thumbnail={ingredientData.image_mobile}
+                      key={`${ingredientData.listKey}bottom`}
+                    />
+                  )
+              )
+            )}
+          </li>
+        </ul>
+        <div className={`${styles.burgerConstructor__checkout} mr-4`}>
+          <div className={`${styles.totalPrice} mr-10`}>
+            <span className="text text_type_digits-medium mr-2">{totalCost}</span>
+            <figure className={styles.currencyIcon}>
+              <CurrencyIcon type="primary" />
+            </figure>
+          </div>
+          <Button
+            htmlType="button"
+            type="primary"
+            size="medium"
+            onClick={() => orderButtonClickHandler()}
+          >
+            Оформить заказ
+          </Button>
         </div>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="medium"
-          onClick={() => orderButtonClickHandler()}
-        >
-          Оформить заказ
-        </Button>
-      </div>
-      {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-          {isLoading ? <LoadingSpinner /> : <OrderDetails />}
-        </Modal>
-      )}
-    </section>
+        {isModalOpen && (
+          <Modal isModalOpen={isModalOpen} closeModal={modalCloseHandler}>
+            {isLoading ? <LoadingSpinner /> : <OrderDetails />}
+          </Modal>
+        )}
+      </section>
+    </DndProvider>
   );
 };
 
