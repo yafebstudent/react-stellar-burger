@@ -48,6 +48,13 @@ module.exports = {
     '@typescript-eslint/lines-between-class-members': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-param-reassign': [
+      'error',
+      {
+        props: true,
+        ignorePropertyModificationsFor: ['state'],
+      },
+    ],
   },
   settings: {
     react: {

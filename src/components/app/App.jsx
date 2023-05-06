@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './App.module.css';
-import getIngredientsData from '../../utils/api/getIngredientsData';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
+import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
+import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 
 const App = () => {
-  const [ingredientsData, setIngredientsData] = useState(null);
+  const { isError, isLoading, isFetching, isSuccess } = useGetIngredientsDataQuery();
+  let content;
 
-  useEffect(() => {
-    getIngredientsData()
-      .then((responseData) => {
-        setIngredientsData(responseData.data);
-      })
-      .catch((error) => {
-        setIngredientsData(null);
-        // eslint-disable-next-line no-console
-        console.log(error.message);
-      });
-  }, []);
+  if (isError) content = <h4>An error has occurred with ingredients data!</h4>;
+  if (isLoading || isFetching) content = <LoadingSpinner />;
+  if (isSuccess) {
+    content = (
+      <>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </>
+    );
+  }
 
   return (
     <div className={styles.app}>
       <AppHeader />
       <main>
-        <div className="outerWrapper">
-          {ingredientsData && <BurgerIngredients ingredientsData={ingredientsData} />}
-          {ingredientsData && <BurgerConstructor ingredientsData={ingredientsData} />}
-        </div>
+        <div className="outerWrapper">{content}</div>
       </main>
     </div>
   );

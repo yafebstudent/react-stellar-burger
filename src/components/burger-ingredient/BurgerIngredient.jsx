@@ -1,13 +1,16 @@
 import React from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import styles from './BurgerIngredient.module.css';
 import { BurgerIngredientPropType } from '../../utils/prop-types';
+import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
 
 const BurgerIngredient = (props) => {
-  const { ingredientData, openModal, setactiveIngredientId } = props;
+  const dispatch = useDispatch();
+  const { ingredientData, openModal } = props;
   const burgerIngredientClickHandler = () => {
     openModal();
-    setactiveIngredientId(ingredientData._id);
+    dispatch(setActiveIngredientData(ingredientData));
   };
 
   return (

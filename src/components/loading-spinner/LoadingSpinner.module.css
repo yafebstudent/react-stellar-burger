@@ -1,0 +1,25 @@
+.loadingSpinnerWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  margin: 8px;
+  border: 4px solid #801ab3;
+  border-top: 4px solid transparent;
+  border-right: 4px solid #801ab3;
+  border-bottom: 4px solid #801ab3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}

@@ -5,16 +5,23 @@ import {
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import styles from './BurgerConstructor.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
 import oderId from '../../utils/data';
-import { ingredientsDataPropType } from '../../utils/prop-types';
 import useModal from '../../hooks/useModal';
+import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
+import { setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 
-const BurgerConstructor = (props) => {
-  const { ingredientsData } = props;
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
+  const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
+  const orderButtonClickHandler = () => {
+    openModal();
+    dispatch(setOrderDetailsData(oderId));
+  };
 
   return (
     <section className={styles.burgerConstructor}>
@@ -23,14 +30,14 @@ const BurgerConstructor = (props) => {
           <ConstructorElement
             type="top"
             isLocked
-            text={`${ingredientsData[0].name} (верх)`}
-            price={ingredientsData[0].price}
-            thumbnail={ingredientsData[0].image_mobile}
+            text={`${ingredientsResponseData.data[0].name} (верх)`}
+            price={ingredientsResponseData.data[0].price}
+            thumbnail={ingredientsResponseData.data[0].image_mobile}
           />
         </li>
         <li>
           <ul className={styles.nestedList}>
-            {ingredientsData.map(
+            {ingredientsResponseData.data.map(
               (ingredientData, index, array) =>
                 index > 0 &&
                 index < array.length && (
@@ -50,9 +57,9 @@ const BurgerConstructor = (props) => {
           <ConstructorElement
             type="bottom"
             isLocked
-            text={`${ingredientsData[0].name} (низ)`}
-            price={ingredientsData[0].price}
-            thumbnail={ingredientsData[0].image_mobile}
+            text={`${ingredientsResponseData.data[0].name} (низ)`}
+            price={ingredientsResponseData.data[0].price}
+            thumbnail={ingredientsResponseData.data[0].image_mobile}
           />
         </li>
       </ul>
@@ -63,19 +70,22 @@ const BurgerConstructor = (props) => {
             <CurrencyIcon type="primary" />
           </figure>
         </div>
-        <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          onClick={() => orderButtonClickHandler()}
+        >
           Оформить заказ
         </Button>
       </div>
       {isModalOpen && (
         <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-          {oderId && <OrderDetails oderId={oderId} />}
+          <OrderDetails />
         </Modal>
       )}
     </section>
   );
 };
-
-BurgerConstructor.propTypes = ingredientsDataPropType;
 
 export default BurgerConstructor;

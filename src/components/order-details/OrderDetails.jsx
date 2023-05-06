@@ -1,10 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './OrderDetails.module.css';
 import checkoutDoneImage from '../../images/checkout-done.gif';
-import { OrderDetailsPropType } from '../../utils/prop-types';
 
-const OrderDetails = (props) => {
-  const { oderId } = props;
+const OrderDetails = () => {
+  const oderId = useSelector((state) => state.orderDetailsDataReducer.orderDetailsData);
 
   return (
     <div className={styles.orderDetails}>
@@ -20,7 +20,5 @@ const OrderDetails = (props) => {
     </div>
   );
 };
-
-OrderDetails.propTypes = OrderDetailsPropType;
 
 export default OrderDetails;

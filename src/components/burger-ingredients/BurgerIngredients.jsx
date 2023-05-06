@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import styles from './BurgerIngredients.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
-import { ingredientsDataPropType } from '../../utils/prop-types';
 import useModal from '../../hooks/useModal';
+import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
+import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
   const [currentTab, setCurrentTab] = React.useState('buns');
-  const { ingredientsData } = props;
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [activeIngredientId, setactiveIngredientId] = useState(null);
-  const getActiveIngredientData = () =>
-    ingredientsData.find((ingredientData) => ingredientData._id === activeIngredientId);
+  const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
+  const modalCloseButtonClickHandler = () => {
+    closeModal();
+    dispatch(clearActiveIngredientData());
+  };
 
   return (
     <section className={`${styles.burgerIngredients} mb-10`}>
@@ -32,58 +36,51 @@ const BurgerIngredients = (props) => {
       <div className={styles.burgerIngredients__items}>
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsData.map(
+          {ingredientsResponseData.data.map(
             (ingredientData) =>
               ingredientData.type === 'bun' && (
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
                   openModal={openModal}
-                  setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
         <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsData.map(
+          {ingredientsResponseData.data.map(
             (ingredientData) =>
               ingredientData.type === 'sauce' && (
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
                   openModal={openModal}
-                  setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
         <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsData.map(
+          {ingredientsResponseData.data.map(
             (ingredientData) =>
               ingredientData.type === 'main' && (
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
                   openModal={openModal}
-                  setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
       </div>
       {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-          {activeIngredientId && (
-            <IngredientDetails activeIngredientData={getActiveIngredientData()} />
-          )}
+        <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
+          <IngredientDetails />
         </Modal>
       )}
     </section>
   );
 };
-
-BurgerIngredients.propTypes = ingredientsDataPropType;
 
 export default BurgerIngredients;
