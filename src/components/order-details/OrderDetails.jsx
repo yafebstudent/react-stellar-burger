@@ -4,12 +4,12 @@ import styles from './OrderDetails.module.css';
 import checkoutDoneImage from '../../images/checkout-done.gif';
 
 const OrderDetails = () => {
-  const oderId = useSelector((state) => state.orderDetailsDataReducer.orderDetailsData);
+  const orderData = useSelector((state) => state.orderDetailsDataReducer.orderDetailsData);
 
   return (
     <div className={styles.orderDetails}>
       <p className={`${styles.orderDetails__title} text text_type_digits-large mt-30 mb-8`}>
-        {oderId}
+        {orderData?.order.number}
       </p>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <img className="mb-15" src={checkoutDoneImage} alt="jackdaw" />

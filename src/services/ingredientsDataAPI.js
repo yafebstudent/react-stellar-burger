@@ -7,7 +7,17 @@ export const ingredientsDataAPI = createApi({
     getIngredientsData: build.query({
       query: () => 'ingredients',
     }),
+    getOrderData: build.mutation({
+      query: (payload) => ({
+        url: 'orders',
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetIngredientsDataQuery } = ingredientsDataAPI;
+export const { useGetIngredientsDataQuery, useGetOrderDataMutation } = ingredientsDataAPI;

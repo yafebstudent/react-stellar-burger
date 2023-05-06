@@ -12,13 +12,17 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
 import oderId from '../../utils/data';
 import useModal from '../../hooks/useModal';
-import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
+import {
+  useGetIngredientsDataQuery,
+  useGetOrderDataMutation,
+} from '../../services/ingredientsDataAPI';
 import { setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 import {
   addIngredientData,
   deleteIngredientData,
 } from '../../services/burgerConstructorIngredientsDataSlice';
 import burgerIcon from '../../images/burger.png';
+import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -27,10 +31,23 @@ const BurgerConstructor = () => {
   const burgerConstructorIngredientsData = useSelector(
     (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
+  const [getOrderData, { isLoading }] = useGetOrderDataMutation();
   const orderButtonClickHandler = () => {
     openModal();
-    dispatch(setOrderDetailsData(oderId));
+    getOrderData(
+      JSON.stringify({
+        ingredients: ['643d69a5c3f7b9001cfa0945'],
+      })
+    )
+      .then((data) => {
+        dispatch(setOrderDetailsData(data.data));
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(`An error has occurred with order data! ${error.message}`);
+      });
   };
+
   const getIngredientDataById = (id) =>
     ingredientsResponseData.data.find((ingredientData) => ingredientData._id === id);
   const [{ isHover }, dropTargetRef] = useDrop({
@@ -157,7 +174,7 @@ const BurgerConstructor = () => {
       </div>
       {isModalOpen && (
         <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-          <OrderDetails />
+          {isLoading ? <LoadingSpinner /> : <OrderDetails />}
         </Modal>
       )}
     </section>

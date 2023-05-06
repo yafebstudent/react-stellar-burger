@@ -31,6 +31,7 @@ const burgerConstructorIngredientsDataSlice = createSlice({
       }
     },
     deleteIngredientData: (state, action) => {
+      console.log(action.payload);
       const index = state.burgerConstructorIngredientsData.indexOf(action.payload);
 
       state.burgerConstructorIngredientsData.splice(index, 1);
