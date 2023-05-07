@@ -36,9 +36,16 @@ const burgerConstructorIngredientsDataSlice = createSlice({
     addSortedIngredients: (state, action) => {
       state.burgerConstructorIngredientsData = [...action.payload];
     },
+    clearBurgerConstructor: (state) => {
+      state.burgerConstructorIngredientsData = [];
+    },
   },
 });
 
-export const { addIngredientData, deleteIngredientData, addSortedIngredients } =
-  burgerConstructorIngredientsDataSlice.actions;
+export const {
+  addIngredientData,
+  deleteIngredientData,
+  addSortedIngredients,
+  clearBurgerConstructor,
+} = burgerConstructorIngredientsDataSlice.actions;
 export default burgerConstructorIngredientsDataSlice.reducer;

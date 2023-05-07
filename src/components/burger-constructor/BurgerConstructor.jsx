@@ -19,6 +19,7 @@ import { clearOrderDetailsData, setOrderDetailsData } from '../../services/order
 import {
   addIngredientData,
   addSortedIngredients,
+  clearBurgerConstructor,
 } from '../../services/burgerConstructorIngredientsDataSlice';
 import burgerIcon from '../../images/burger.png';
 import LoadingSpinner from '../loading-spinner/LoadingSpinner';
@@ -41,6 +42,7 @@ const BurgerConstructor = () => {
     })
       .then((data) => {
         dispatch(setOrderDetailsData(data.data));
+        dispatch(clearBurgerConstructor());
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
