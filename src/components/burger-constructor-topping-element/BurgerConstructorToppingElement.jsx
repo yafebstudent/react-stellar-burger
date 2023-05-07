@@ -41,19 +41,22 @@ const BurgerConstructorToppingElement = (props) => {
       item.index = hoverIndex;
     },
   });
-
-  const [, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: 'toppingElement',
     item: { index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
-
+  const toppingElementOpacity = isDragging ? 0 : 1;
   drag(drop(ingredientContainerRef));
 
   return (
-    <li className={`${styles.burgerIngredient} mr-2`} ref={ingredientContainerRef}>
+    <li
+      className={`${styles.burgerIngredient} mr-2`}
+      ref={ingredientContainerRef}
+      style={{ opacity: toppingElementOpacity }}
+    >
       <DragIcon type={ingredientData.type} />
       <ConstructorElement
         text={ingredientData.name}

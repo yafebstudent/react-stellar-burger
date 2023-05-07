@@ -36,10 +36,7 @@ const burgerConstructorIngredientsDataSlice = createSlice({
       state.burgerConstructorIngredientsData.splice(index, 1);
     },
     addSortedIngredients: (state, action) => {
-      state.burgerConstructorIngredientsData.push({
-        ...action.payload,
-        listKey: window.crypto.randomUUID(),
-      });
+      state.burgerConstructorIngredientsData = [...action.payload];
     },
   },
 });
