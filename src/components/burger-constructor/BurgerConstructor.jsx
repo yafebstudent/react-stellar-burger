@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -53,7 +53,6 @@ const BurgerConstructor = () => {
     closeModal();
     dispatch(clearOrderDetailsData());
   };
-
   const getIngredientDataById = (id) =>
     ingredientsResponseData.data.find((ingredientData) => ingredientData._id === id);
   const [{ isHover: isConstructorHover }, constructorRef] = useDrop({
@@ -69,7 +68,6 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
   });
-
   const totalCost = useMemo(() => {
     const bunsCount = 2;
 
@@ -80,7 +78,6 @@ const BurgerConstructor = () => {
       return sum + ingredientData.price;
     }, 0);
   }, [burgerConstructorIngredientsData]);
-
   const swapIngredients = useCallback(
     (dragIndex, hoverIndex) => {
       const dragItem = burgerConstructorIngredientsData[dragIndex];
@@ -100,6 +97,12 @@ const BurgerConstructor = () => {
     },
     [burgerConstructorIngredientsData, dispatch]
   );
+  const isBunsInBurgerConstructor = () => {
+    return (
+      burgerConstructorIngredientsData.filter((ingredientData) => ingredientData.type === 'bun')
+        .length > 0
+    );
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -109,9 +112,7 @@ const BurgerConstructor = () => {
       >
         <ul className={`${styles.burgerConstructor__mainList} mt-25 mb-10`}>
           <li className={`${styles.burgerIngredient} mr-4`}>
-            {burgerConstructorIngredientsData.filter(
-              (ingredientsData) => ingredientsData.type === 'bun'
-            ).length === 0 ? (
+            {!isBunsInBurgerConstructor() ? (
               <ConstructorElement
                 type="top"
                 isLocked
@@ -151,9 +152,7 @@ const BurgerConstructor = () => {
             </ul>
           </li>
           <li className={`${styles.burgerIngredient} mr-4`}>
-            {burgerConstructorIngredientsData.filter(
-              (ingredientsData) => ingredientsData.type === 'bun'
-            ).length === 0 ? (
+            {!isBunsInBurgerConstructor() ? (
               <ConstructorElement
                 type="bottom"
                 isLocked
@@ -190,6 +189,7 @@ const BurgerConstructor = () => {
             type="primary"
             size="medium"
             onClick={() => orderButtonClickHandler()}
+            disabled={!isBunsInBurgerConstructor()}
           >
             Оформить заказ
           </Button>
