@@ -34,13 +34,11 @@ const BurgerConstructor = () => {
   const [getOrderData, { isLoading }] = useGetOrderDataMutation();
   const orderButtonClickHandler = () => {
     openModal();
-    getOrderData(
-      JSON.stringify({
-        ingredients: [
-          ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
-        ],
-      })
-    )
+    getOrderData({
+      ingredients: [
+        ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
+      ],
+    })
       .then((data) => {
         dispatch(setOrderDetailsData(data.data));
       })
