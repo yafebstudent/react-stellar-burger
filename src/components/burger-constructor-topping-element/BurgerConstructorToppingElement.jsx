@@ -10,7 +10,7 @@ const BurgerConstructorToppingElement = (props) => {
   const { ingredientData, index, swapIngredients } = props;
   const dispatch = useDispatch();
   const handleConstructorElementDelete = (data) => {
-    dispatch(deleteIngredientData(data));
+    dispatch(deleteIngredientData(index));
   };
   const ingredientContainerRef = useRef(null);
   const [, drop] = useDrop({

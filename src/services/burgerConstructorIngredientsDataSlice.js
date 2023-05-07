@@ -31,9 +31,7 @@ const burgerConstructorIngredientsDataSlice = createSlice({
       }
     },
     deleteIngredientData: (state, action) => {
-      const index = state.burgerConstructorIngredientsData.indexOf(action.payload);
-
-      state.burgerConstructorIngredientsData.splice(index, 1);
+      state.burgerConstructorIngredientsData.splice(action.payload, 1);
     },
     addSortedIngredients: (state, action) => {
       state.burgerConstructorIngredientsData = [...action.payload];
