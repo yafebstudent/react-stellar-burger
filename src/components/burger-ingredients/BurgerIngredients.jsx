@@ -20,10 +20,8 @@ const BurgerIngredients = () => {
     closeModal();
     dispatch(clearActiveIngredientData());
   };
-  const scrollHandler = (event) => {
-    event.target.addEventListener('scroll', () => {
-      setCurrentTab(getCurrentTabName(styles.burgerIngredients__items));
-    });
+  const scrollHandler = () => {
+    setCurrentTab(getCurrentTabName(styles.burgerIngredients__items));
   };
   const tabClickHandler = (tabName) => {
     setCurrentTab(tabName);
