@@ -23,12 +23,9 @@ const MainPage = () => {
   }
 
   return (
-    <div>
-      <AppHeader />
-      <main>
-        <div className="outerWrapper">{content}</div>
-      </main>
-    </div>
+    <main>
+      <div className="outerWrapper">{content}</div>
+    </main>
   );
 };
 
