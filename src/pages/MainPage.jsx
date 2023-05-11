@@ -5,7 +5,6 @@ import LoadingSpinner from '../components/loading-spinner/LoadingSpinner';
 import { useGetIngredientsDataQuery } from '../services/stellarBurgersAPI';
 import BurgerIngredients from '../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../components/burger-constructor/BurgerConstructor';
-import AppHeader from '../components/app-header/AppHeader';
 
 const MainPage = () => {
   const { isError, isLoading, isFetching, isSuccess } = useGetIngredientsDataQuery();

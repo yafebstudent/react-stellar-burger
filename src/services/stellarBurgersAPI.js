@@ -17,7 +17,43 @@ export const stellarBurgersAPI = createApi({
         },
       }),
     }),
+    getResetEmail: build.mutation({
+      query: (payload) => ({
+        url: 'password-reset',
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
+    resetPassword: build.mutation({
+      query: (payload) => ({
+        url: 'password-reset/reset',
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
+    registerUser: build.mutation({
+      query: (payload) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetIngredientsDataQuery, useGetOrderDataMutation } = stellarBurgersAPI;
+export const {
+  useGetIngredientsDataQuery,
+  useGetOrderDataMutation,
+  useGetResetEmailMutation,
+  useResetPasswordMutation,
+  useRegisterUserMutation,
+} = stellarBurgersAPI;
