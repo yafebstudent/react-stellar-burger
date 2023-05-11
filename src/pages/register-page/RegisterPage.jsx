@@ -34,8 +34,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <main className={`${styles.register}`} onSubmit={(event) => handleSubmit(event)}>
-      <form>
+    <main className={`${styles.register}`}>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
         <Input
           type="text"
