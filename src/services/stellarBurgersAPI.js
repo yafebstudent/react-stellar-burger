@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import baseUrl from '../utils/api/constants';
 
-export const ingredientsDataAPI = createApi({
+export const stellarBurgersAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     getIngredientsData: build.query({
@@ -20,4 +20,4 @@ export const ingredientsDataAPI = createApi({
   }),
 });
 
-export const { useGetIngredientsDataQuery, useGetOrderDataMutation } = ingredientsDataAPI;
+export const { useGetIngredientsDataQuery, useGetOrderDataMutation } = stellarBurgersAPI;
