@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import styles from './BurgerIngredients.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
@@ -13,12 +14,14 @@ import getCurrentTabName from './getCurrentTabName';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const [currentTab, setCurrentTab] = useState('buns');
   const { isModalOpen, openModal, closeModal } = useModal();
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
   const modalCloseButtonClickHandler = () => {
     closeModal();
     dispatch(clearActiveIngredientData());
+    window.history.replaceState(null, '', location.pathname);
   };
   const scrollHandler = () => {
     setCurrentTab(getCurrentTabName(styles.burgerIngredients__items));

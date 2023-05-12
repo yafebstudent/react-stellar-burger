@@ -12,6 +12,7 @@ const BurgerIngredient = (props) => {
   const burgerIngredientClickHandler = () => {
     openModal();
     dispatch(setActiveIngredientData(ingredientData));
+    window.history.pushState(null, '', `ingredients/${ingredientData._id}`);
   };
   const [, dragElementRef] = useDrag({
     type: 'ingredientItem',
