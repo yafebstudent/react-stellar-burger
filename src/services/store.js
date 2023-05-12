@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ingredientsDataAPI } from './ingredientsDataAPI';
+import { stellarBurgersAPI } from './stellarBurgersAPI';
 import rootReducer from './rootReducer';
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(ingredientsDataAPI.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(stellarBurgersAPI.middleware),
 });
 
 export default store;

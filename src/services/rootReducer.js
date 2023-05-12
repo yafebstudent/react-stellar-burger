@@ -2,13 +2,13 @@ import { combineReducers } from 'redux';
 import activeIngredientDataReducer from './activeIngredientDataSlice';
 import orderDetailsDataReducer from './orderDetailsDataSlice';
 import burgerConstructorIngredientsDataReducer from './burgerConstructorIngredientsDataSlice';
-import { ingredientsDataAPI } from './ingredientsDataAPI';
+import { stellarBurgersAPI } from './stellarBurgersAPI';
 
 const rootReducer = combineReducers({
   activeIngredientDataReducer,
   orderDetailsDataReducer,
   burgerConstructorIngredientsDataReducer,
-  [ingredientsDataAPI.reducerPath]: ingredientsDataAPI.reducer,
+  [stellarBurgersAPI.reducerPath]: stellarBurgersAPI.reducer,
 });
 
 export default rootReducer;
