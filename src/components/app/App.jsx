@@ -7,7 +7,7 @@ import RegisterPage from '../../pages/register-page/RegisterPage';
 import ResetPasswordPage from '../../pages/reset-password-page/ResetPasswordPage';
 import ForgotPasswordPage from '../../pages/forgot-password-page/ForgotPasswordPage';
 import Page404 from '../../pages/page-404/Page404';
-import Profile from '../../pages/profile/Profile';
+import Profile from '../../pages/profile-page/Profile';
 
 const App = () => {
   return (
