@@ -1,0 +1,14 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 180px;
+  text-align: center;
+}
+.link {
+  color: #4C4CFF;
+}
+.link:hover {
+  color: #F2F2F3;
+}
