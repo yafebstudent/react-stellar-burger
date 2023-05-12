@@ -1,35 +1,29 @@
 import React from 'react';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
-import styles from './App.module.css';
-import AppHeader from '../app-header/AppHeader';
-import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
-import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
-import LoadingSpinner from '../loading-spinner/LoadingSpinner';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainPage from '../../pages/MainPage';
+import Layout from '../Layout';
+import LoginPage from '../../pages/login-page/LoginPage';
+import RegisterPage from '../../pages/register-page/RegisterPage';
+import ResetPasswordPage from '../../pages/reset-password-page/ResetPasswordPage';
+import ForgotPasswordPage from '../../pages/forgot-password-page/ForgotPasswordPage';
+import Page404 from '../../pages/page-404/Page404';
+import Profile from '../../pages/profile/Profile';
 
 const App = () => {
-  const { isError, isLoading, isFetching, isSuccess } = useGetIngredientsDataQuery();
-  let content;
-
-  if (isError) content = <h4>An error has occurred with ingredients data!</h4>;
-  if (isLoading || isFetching) content = <LoadingSpinner />;
-  if (isSuccess) {
-    content = (
-      <DndProvider backend={HTML5Backend}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-      </DndProvider>
-    );
-  }
-
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <main>
-        <div className="outerWrapper">{content}</div>
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<Page404 />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
