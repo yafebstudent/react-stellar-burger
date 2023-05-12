@@ -1,14 +1,18 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './ResetPasswordPage.module.css';
-import { useResetPasswordMutation } from '../../services/stellarBurgersAPI';
+import { useGetUserDataQuery, useResetPasswordMutation } from '../../services/stellarBurgersAPI';
 
 const ResetPasswordPage = () => {
-  const [codeValue, setCodeValue] = useState('');
+  const navigate = useNavigate();
   const [passwordValue, setPasswordValue] = useState('');
+  const [codeValue, setCodeValue] = useState('');
   const [resetPassword] = useResetPasswordMutation();
+  const { isSuccess: isUserAauthorize } = useGetUserDataQuery(
+    localStorage.getItem('accessToken') || ''
+  );
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!passwordValue) {
@@ -16,15 +20,21 @@ const ResetPasswordPage = () => {
     }
     resetPassword({
       password: passwordValue,
-      token: '',
+      token: codeValue,
     })
       .then((data) => {
-        console.log(data);
+        if ('data' in data && data.data.success === true) {
+          navigate('/login', { replace: true });
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  if (isUserAauthorize) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <main className={`${styles.resetPassword}`}>
