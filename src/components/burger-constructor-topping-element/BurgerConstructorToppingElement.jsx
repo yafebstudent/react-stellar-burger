@@ -9,7 +9,7 @@ import { BurgerConstructorToppingElementPropType } from '../../utils/prop-types'
 const BurgerConstructorToppingElement = (props) => {
   const { ingredientData, index, swapIngredients } = props;
   const dispatch = useDispatch();
-  const handleConstructorElementDelete = () => {
+  const handleConstructorElementDelete = (data) => {
     dispatch(deleteIngredientData(index));
   };
   const ingredientContainerRef = useRef(null);
