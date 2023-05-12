@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './IngredientDetails.module.css';
-import { IngredientDetailsPropType } from '../../utils/prop-types';
 
-const IngredientDetails = (props) => {
-  const { activeIngredientData } = props;
+const IngredientDetails = () => {
+  const activeIngredientData = useSelector(
+    (state) => state.activeIngredientDataReducer.activeIngredientData
+  );
 
   return (
     <div className={styles.ingredientDetails}>
@@ -45,7 +47,5 @@ const IngredientDetails = (props) => {
     </div>
   );
 };
-
-IngredientDetails.propTypes = IngredientDetailsPropType;
 
 export default IngredientDetails;

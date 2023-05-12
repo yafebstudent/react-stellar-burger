@@ -1,89 +1,101 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 import styles from './BurgerIngredients.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
-import { ingredientsDataPropType } from '../../utils/prop-types';
 import useModal from '../../hooks/useModal';
+import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
+import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
+import getCurrentTabName from './getCurrentTabName';
 
-const BurgerIngredients = (props) => {
-  const [currentTab, setCurrentTab] = React.useState('buns');
-  const { ingredientsData } = props;
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const [currentTab, setCurrentTab] = useState('buns');
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [activeIngredientId, setactiveIngredientId] = useState(null);
-  const getActiveIngredientData = () =>
-    ingredientsData.find((ingredientData) => ingredientData._id === activeIngredientId);
+  const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
+  const modalCloseButtonClickHandler = () => {
+    closeModal();
+    dispatch(clearActiveIngredientData());
+  };
+  const scrollHandler = () => {
+    setCurrentTab(getCurrentTabName(styles.burgerIngredients__items));
+  };
+  const tabClickHandler = (tabName) => {
+    setCurrentTab(tabName);
+    document.querySelector(`#${tabName}`).scrollIntoView({ block: 'start', behavior: 'smooth' });
+  };
 
   return (
     <section className={`${styles.burgerIngredients} mb-10`}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={`${styles.burgerIngredients__tabs} mb-10`}>
-        <Tab value="buns" active={currentTab === 'buns'} onClick={setCurrentTab}>
+        <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
           Булки
         </Tab>
-        <Tab value="sauces" active={currentTab === 'sauces'} onClick={setCurrentTab}>
+        <Tab value="sauces" active={currentTab === 'sauces'} onClick={tabClickHandler}>
           Соусы
         </Tab>
-        <Tab value="toppings" active={currentTab === 'toppings'} onClick={setCurrentTab}>
+        <Tab value="toppings" active={currentTab === 'toppings'} onClick={tabClickHandler}>
           Начинки
         </Tab>
       </div>
-      <div className={styles.burgerIngredients__items}>
-        <h2 className="text text_type_main-medium mb-6">Булки</h2>
+      <div className={styles.burgerIngredients__items} onScroll={scrollHandler}>
+        <h2 className="text text_type_main-medium mb-6" id="buns">
+          Булки
+        </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsData.map(
+          {ingredientsResponseData.data.map(
             (ingredientData) =>
               ingredientData.type === 'bun' && (
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
                   openModal={openModal}
-                  setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
-        <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
+        <h2 className="text text_type_main-medium mt-10 mb-6" id="sauces">
+          Соусы
+        </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsData.map(
+          {ingredientsResponseData.data.map(
             (ingredientData) =>
               ingredientData.type === 'sauce' && (
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
                   openModal={openModal}
-                  setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
-        <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
+        <h2 className="text text_type_main-medium mt-10 mb-6" id="toppings">
+          Начинки
+        </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsData.map(
+          {ingredientsResponseData.data.map(
             (ingredientData) =>
               ingredientData.type === 'main' && (
                 <BurgerIngredient
                   key={ingredientData._id}
                   ingredientData={ingredientData}
                   openModal={openModal}
-                  setactiveIngredientId={setactiveIngredientId}
                 />
               )
           )}
         </ul>
       </div>
       {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-          {activeIngredientId && (
-            <IngredientDetails activeIngredientData={getActiveIngredientData()} />
-          )}
+        <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
+          <IngredientDetails />
         </Modal>
       )}
     </section>
   );
 };
-
-BurgerIngredients.propTypes = ingredientsDataPropType;
 
 export default BurgerIngredients;

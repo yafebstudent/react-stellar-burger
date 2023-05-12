@@ -1,15 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './OrderDetails.module.css';
 import checkoutDoneImage from '../../images/checkout-done.gif';
-import { OrderDetailsPropType } from '../../utils/prop-types';
 
-const OrderDetails = (props) => {
-  const { oderId } = props;
+const OrderDetails = () => {
+  const orderData = useSelector((state) => state.orderDetailsDataReducer.orderDetailsData);
 
   return (
     <div className={styles.orderDetails}>
       <p className={`${styles.orderDetails__title} text text_type_digits-large mt-30 mb-8`}>
-        {oderId}
+        {orderData?.order.number}
       </p>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <img className="mb-15" src={checkoutDoneImage} alt="jackdaw" />
@@ -20,7 +20,5 @@ const OrderDetails = (props) => {
     </div>
   );
 };
-
-OrderDetails.propTypes = OrderDetailsPropType;
 
 export default OrderDetails;

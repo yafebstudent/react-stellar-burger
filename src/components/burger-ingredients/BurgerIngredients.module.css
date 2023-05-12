@@ -6,7 +6,7 @@
 }
 .burgerIngredients__items {
   max-width: 600px;
-  height: 100vh;
+  max-height: 60vh;
   overflow-y: scroll;
 }
 .burgerIngredients__items::-webkit-scrollbar {
