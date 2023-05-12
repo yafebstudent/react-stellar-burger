@@ -10,10 +10,16 @@
 }
 .navigation__list {
   display: flex;
-
   flex-direction: column;
   align-items: flex-start;
 }
 .navigationListItem {
   height: 64px;
+}
+.userDataList {
+  min-width: 480px;
+  max-height: 240px;
+}
+.buttons {  
+  text-align: right;
 }
