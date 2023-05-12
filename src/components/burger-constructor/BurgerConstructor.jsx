@@ -14,7 +14,7 @@ import useModal from '../../hooks/useModal';
 import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
-} from '../../services/stellarBurgersAPI';
+} from '../../services/ingredientsDataAPI';
 import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 import {
   addIngredientData,

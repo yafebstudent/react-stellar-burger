@@ -7,7 +7,7 @@ import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import useModal from '../../hooks/useModal';
-import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
+import { useGetIngredientsDataQuery } from '../../services/ingredientsDataAPI';
 import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import getCurrentTabName from './getCurrentTabName';
 

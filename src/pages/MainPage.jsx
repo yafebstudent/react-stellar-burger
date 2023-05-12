@@ -2,7 +2,7 @@ import React from 'react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import LoadingSpinner from '../components/loading-spinner/LoadingSpinner';
-import { useGetIngredientsDataQuery } from '../services/stellarBurgersAPI';
+import { useGetIngredientsDataQuery } from '../services/ingredientsDataAPI';
 import BurgerIngredients from '../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../components/burger-constructor/BurgerConstructor';
 import AppHeader from '../components/app-header/AppHeader';
