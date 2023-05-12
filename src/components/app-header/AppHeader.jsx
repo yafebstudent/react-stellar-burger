@@ -7,6 +7,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './AppHeader.module.css';
+import setLinkActiveStyle from '../../utils/setLinkActiveStyle';
 
 const AppHeader = () => {
   return (
@@ -14,7 +15,11 @@ const AppHeader = () => {
       <nav className={styles.navbar}>
         <ul className={`${styles.navbarList} pt-4 pb-4`}>
           <li>
-            <NavLink to="/" className={`${styles.navbarList__link} pt-4 pr-5 pb-4 pl-5`}>
+            <NavLink
+              to="/"
+              className={`${styles.navbarList__link} pt-4 pr-5 pb-4 pl-5`}
+              style={setLinkActiveStyle}
+            >
               <BurgerIcon type="secondary" />
               <span className="text text_type_main-default ml-2">Конструктор</span>
             </NavLink>
@@ -31,7 +36,11 @@ const AppHeader = () => {
             </NavLink>
           </li>
           <li className={styles.profile}>
-            <NavLink to="/profile" className={`${styles.navbarList__link} pt-4 pr-5 pb-4 pl-5`}>
+            <NavLink
+              to="/profile"
+              className={`${styles.navbarList__link} pt-4 pr-5 pb-4 pl-5`}
+              style={setLinkActiveStyle}
+            >
               <ProfileIcon type="secondary" />
               <span className="text text_type_main-default ml-2">Личный кабинет</span>
             </NavLink>
