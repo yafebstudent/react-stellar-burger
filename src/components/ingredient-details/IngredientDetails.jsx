@@ -79,7 +79,11 @@ const IngredientDetails = () => {
     );
   }
 
-  return <div className={styles.ingredientDetails}>{content}</div>;
+  return (
+    <div className={styles.ingredientDetails} style={{ marginTop: id ? '120px' : '0' }}>
+      {content}
+    </div>
+  );
 };
 
 export default IngredientDetails;

@@ -4,13 +4,13 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styles from './BurgerIngredients.module.css';
-import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import useModal from '../../hooks/useModal';
 import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
 import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import getCurrentTabName from './getCurrentTabName';
+import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
