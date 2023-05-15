@@ -22,7 +22,7 @@ li {
 }
 .outerWrapper {
   width: 1240px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   gap: 40px;
   margin: 0 auto;
