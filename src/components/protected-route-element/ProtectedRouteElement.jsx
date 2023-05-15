@@ -1,16 +1,20 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useGetUserDataQuery } from '../../services/stellarBurgersAPI';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const ProtectedRouteElement = (props) => {
-  const { element } = props;
-  const { isSuccess, isError } = useGetUserDataQuery(localStorage.getItem('accessToken') || '');
-
-  if (!isSuccess && !isError) {
-    return null;
+const ProtectedRouteElement = ({ children, anonymous = false }) => {
+  const userData = useSelector((store) => store.userSliceReducer.userData);
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  if (anonymous && userData) {
+    return <Navigate to={from} />;
   }
 
-  return !isError ? element : <Navigate to="/login" replace />;
+  if (!anonymous && !userData) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return children;
 };
 
 export default ProtectedRouteElement;
