@@ -18,3 +18,7 @@ export const BurgerConstructorToppingElementPropType = {
   index: PropTypes.number.isRequired,
   swapIngredients: PropTypes.func.isRequired,
 };
+export const ProtectedRouteElementPropType = {
+  element: PropTypes.element.isRequired,
+  anonymous: PropTypes.bool,
+};

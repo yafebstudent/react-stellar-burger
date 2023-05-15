@@ -2,12 +2,14 @@ import React from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './BurgerIngredient.module.css';
 import { BurgerIngredientPropType } from '../../utils/prop-types';
 import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
 
 const BurgerIngredient = (props) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { ingredientData, openModal } = props;
   const burgerIngredientClickHandler = () => {
     openModal();
@@ -36,22 +38,24 @@ const BurgerIngredient = (props) => {
       tabIndex={0}
       ref={dragElementRef}
     >
-      {ingredientCount > 0 && (
-        <Counter
-          count={ingredientData.type === 'bun' ? ingredientCount + 1 : ingredientCount}
-          size="default"
+      <Link to={`/ingredients/${ingredientData._id}`} state={{ background: location }}>
+        {ingredientCount > 0 && (
+          <Counter
+            count={ingredientData.type === 'bun' ? ingredientCount + 1 : ingredientCount}
+            size="default"
+          />
+        )}
+        <img
+          className={`${styles.image} ml-4 mr-4 mb-2`}
+          src={ingredientData.image}
+          alt={ingredientData.name}
         />
-      )}
-      <img
-        className={`${styles.image} ml-4 mr-4 mb-2`}
-        src={ingredientData.image}
-        alt={ingredientData.name}
-      />
-      <div className={`${styles.price} mb-2`}>
-        <h4 className="text text_type_digits-default mr-1">{ingredientData.price}</h4>
-        <CurrencyIcon type="primary" />
-      </div>
-      <h2 className={`${styles.name} text text_type_main-default`}>{ingredientData.name}</h2>
+        <div className={`${styles.price} mb-2`}>
+          <h4 className="text text_type_digits-default mr-1">{ingredientData.price}</h4>
+          <CurrencyIcon type="primary" />
+        </div>
+        <h2 className={`${styles.name} text text_type_main-default`}>{ingredientData.name}</h2>
+      </Link>
     </li>
   );
 };

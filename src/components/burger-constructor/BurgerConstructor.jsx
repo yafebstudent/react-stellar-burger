@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './BurgerConstructor.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
@@ -14,7 +15,8 @@ import useModal from '../../hooks/useModal';
 import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
-} from '../../services/ingredientsDataAPI';
+  useGetUserDataQuery,
+} from '../../services/stellarBurgersAPI';
 import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 import {
   addIngredientData,
@@ -26,28 +28,37 @@ import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 import BurgerConstructorToppingElement from '../burger-constructor-topping-element/BurgerConstructorToppingElement';
 
 const BurgerConstructor = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
+  const { data: userDataResponseData } = useGetUserDataQuery(
+    localStorage.getItem('accessToken') || ''
+  );
+  const [getOrderData, { isLoading }] = useGetOrderDataMutation();
   const burgerConstructorIngredientsData = useSelector(
     (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
-  const [getOrderData, { isLoading }] = useGetOrderDataMutation();
   const orderButtonClickHandler = () => {
-    openModal();
-    getOrderData({
-      ingredients: [
-        ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
-      ],
-    })
-      .then((data) => {
-        dispatch(setOrderDetailsData(data.data));
-        dispatch(clearBurgerConstructor());
+    if (userDataResponseData) {
+      openModal();
+      getOrderData({
+        ingredients: [
+          ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
+        ],
       })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error(`An error has occurred with order data! ${error.message}`);
-      });
+        .then((data) => {
+          dispatch(setOrderDetailsData(data.data));
+          dispatch(clearBurgerConstructor());
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error(`An error has occurred with order data! ${error.message}`);
+        });
+    } else {
+      navigate('/login', { state: { from: location } });
+    }
   };
   const modalCloseHandler = () => {
     closeModal();
