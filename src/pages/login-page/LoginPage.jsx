@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   EmailInput,
   PasswordInput,
@@ -9,22 +9,22 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './LoginPage.module.css';
 import { useAuthUserMutation } from '../../services/stellarBurgersAPI';
+import useForm from '../../hooks/useForm';
 
 const LoginPage = () => {
-  const userData = useSelector((state) => state.userDataReducer.userData);
   const location = useLocation();
   const navigate = useNavigate();
+  const { values: inputValues, handleChange } = useForm({ email: '', password: '' });
+  const userData = useSelector((state) => state.userDataReducer.userData);
   const [authUser] = useAuthUserMutation();
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!emailValue || !passwordValue) {
+    if (!inputValues.email || !inputValues.password) {
       return;
     }
     authUser({
-      email: emailValue,
-      password: passwordValue,
+      email: inputValues.email,
+      password: inputValues.password,
     })
       .then((data) => {
         const { data: responseData } = data;
@@ -59,16 +59,16 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit}>
         <h1 className="text text_type_main-medium mb-6">Вход</h1>
         <EmailInput
-          onChange={(event) => setEmailValue(event.target.value)}
-          value={emailValue}
+          onChange={(event) => handleChange(event)}
+          value={inputValues.email}
           name="email"
           placeholder="E-mail"
           isIcon={false}
           extraClass="mb-6"
         />
         <PasswordInput
-          onChange={(event) => setPasswordValue(event.target.value)}
-          value={passwordValue}
+          onChange={(event) => handleChange(event)}
+          value={inputValues.password}
           name="password"
           extraClass="mb-6"
         />
