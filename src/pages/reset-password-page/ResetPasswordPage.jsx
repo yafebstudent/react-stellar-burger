@@ -1,18 +1,16 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './ResetPasswordPage.module.css';
-import { useGetUserDataQuery, useResetPasswordMutation } from '../../services/stellarBurgersAPI';
+import { useResetPasswordMutation } from '../../services/stellarBurgersAPI';
 
 const ResetPasswordPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [passwordValue, setPasswordValue] = useState('');
   const [codeValue, setCodeValue] = useState('');
   const [resetPassword] = useResetPasswordMutation();
-  const { isSuccess: isUserAauthorize } = useGetUserDataQuery(
-    localStorage.getItem('accessToken') || ''
-  );
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!passwordValue) {
@@ -32,7 +30,7 @@ const ResetPasswordPage = () => {
       });
   };
 
-  if (isUserAauthorize) {
+  if (location.state?.from.pathname !== '/forgot-password') {
     return <Navigate to="/" replace />;
   }
 

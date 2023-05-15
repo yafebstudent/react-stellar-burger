@@ -5,13 +5,15 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './LoginPage.module.css';
-import { useAuthUserMutation, useGetUserDataQuery } from '../../services/stellarBurgersAPI';
+import { useAuthUserMutation } from '../../services/stellarBurgersAPI';
 
 const LoginPage = () => {
+  const userData = useSelector((state) => state.userDataReducer.userData);
+  const location = useLocation();
   const navigate = useNavigate();
-  const { isSuccess } = useGetUserDataQuery(localStorage.getItem('accessToken') || '');
   const [authUser] = useAuthUserMutation();
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -41,15 +43,15 @@ const LoginPage = () => {
             localStorage.setItem('refreshToken', refreshToken);
           }
         }
-        navigate('/', { replace: true });
+        navigate(`${location.state?.from.pathname || '/'}`, { replace: true });
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  if (isSuccess) {
-    return <Navigate to="/" replace />;
+  if (userData) {
+    return <Navigate to={`${location.state?.from.pathname || '/'}`} />;
   }
 
   return (

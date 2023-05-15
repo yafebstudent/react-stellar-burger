@@ -23,6 +23,7 @@ const AppHeader = () => {
               <BurgerIcon type="secondary" />
               <span className="text text_type_main-default ml-2">Конструктор</span>
             </NavLink>
+            <NavLink to="/register">register</NavLink>
           </li>
           <li>
             <NavLink

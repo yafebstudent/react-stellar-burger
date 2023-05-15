@@ -7,6 +7,7 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styles from './Profile.module.css';
 import setLinkActiveStyle from '../../utils/setLinkActiveStyle';
 import {
@@ -15,9 +16,11 @@ import {
   useUpdateUserDataMutation,
 } from '../../services/stellarBurgersAPI';
 import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
+import { clearUserData } from '../../services/userDataSlice';
 
 const Profile = () => {
   let content;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     data: userDataResponseData,
@@ -89,11 +92,12 @@ const Profile = () => {
           }
           localStorage.removeItem('refreshToken');
           localStorage.removeItem('accessToken');
+          dispatch(clearUserData());
           navigate('/login', { replace: true });
         })
         .catch((error) => console.error(error));
     },
-    [logOut, navigate]
+    [dispatch, logOut, navigate]
   );
 
   useEffect(() => {

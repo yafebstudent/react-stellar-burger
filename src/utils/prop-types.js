@@ -20,4 +20,5 @@ export const BurgerConstructorToppingElementPropType = {
 };
 export const ProtectedRouteElementPropType = {
   element: PropTypes.element.isRequired,
+  anonymous: PropTypes.bool,
 };

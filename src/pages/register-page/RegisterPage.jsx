@@ -6,17 +6,19 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './RegisterPage.module.css';
-import { useGetUserDataQuery, useRegisterUserMutation } from '../../services/stellarBurgersAPI';
+import { useRegisterUserMutation } from '../../services/stellarBurgersAPI';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const userData = useSelector((state) => state.userDataReducer.userData);
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [nameValue, setNameValue] = useState('');
   const [registerUser] = useRegisterUserMutation();
-  const { isSuccess } = useGetUserDataQuery(localStorage.getItem('accessToken') || '');
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!emailValue || !passwordValue || !nameValue) {
@@ -36,8 +38,8 @@ const RegisterPage = () => {
       });
   };
 
-  if (isSuccess) {
-    return <Navigate to="/" replace />;
+  if (userData) {
+    return <Navigate to={`${location.state?.from.pathname || '/'}`} />;
   }
 
   return (

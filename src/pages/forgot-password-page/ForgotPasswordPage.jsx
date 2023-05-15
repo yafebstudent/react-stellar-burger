@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './ForgotPasswordPage.module.css';
 import { useGetResetEmailMutation, useGetUserDataQuery } from '../../services/stellarBurgersAPI';
 
 const ForgotPasswordPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [emailValue, setEmailValue] = useState('');
   const [getResetEmail] = useGetResetEmailMutation();
@@ -20,7 +21,7 @@ const ForgotPasswordPage = () => {
     })
       .then((data) => {
         console.log(data);
-        navigate('/reset-password', { replace: true });
+        navigate('/reset-password', { state: { from: location }, replace: true });
       })
       .catch((error) => {
         console.error(error);

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import baseUrl from '../utils/apiConstants';
-import { setUser } from './userSlice';
+import { setUser } from './userDataSlice';
 
 export const stellarBurgersAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -26,16 +26,6 @@ export const stellarBurgersAPI = createApi({
           Authorization: `Bearer ${accessToken}`,
         },
       }),
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-
-          dispatch(setUser(data));
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(error);
-        }
-      },
     }),
     getResetEmail: build.mutation({
       query: (payload) => ({
@@ -76,6 +66,16 @@ export const stellarBurgersAPI = createApi({
           'Content-type': 'application/json; charset=UTF-8',
         },
       }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(setUser(data));
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('authUser mutation', error);
+        }
+      },
     }),
     logOut: build.mutation({
       query: () => ({
