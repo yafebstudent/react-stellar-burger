@@ -1,20 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import baseUrl from '../utils/apiConstants';
+import { setUser } from './userSlice';
 
 export const stellarBurgersAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     getIngredientsData: build.query({
       query: () => 'ingredients',
-    }),
-    getUserData: build.query({
-      query: (accessToken) => ({
-        url: 'auth/user',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
     }),
     getOrderData: build.mutation({
       query: (payload) => ({
@@ -25,6 +17,25 @@ export const stellarBurgersAPI = createApi({
           'Content-type': 'application/json; charset=UTF-8',
         },
       }),
+    }),
+    getUserData: build.query({
+      query: (accessToken) => ({
+        url: 'auth/user',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(setUser(data));
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error);
+        }
+      },
     }),
     getResetEmail: build.mutation({
       query: (payload) => ({
