@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import baseUrl from '../utils/apiConstants';
 import { setUser } from './userDataSlice';
+import { IGetIngredientsDataMitation, IGetIngredientsDataQuery } from '../utils/types';
 
 export const stellarBurgersAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
-    getIngredientsData: build.query({
+    getIngredientsData: build.query<IGetIngredientsDataQuery, void>({
       query: () => 'ingredients',
     }),
     getOrderData: build.mutation({
@@ -77,7 +78,7 @@ export const stellarBurgersAPI = createApi({
         }
       },
     }),
-    logOut: build.mutation({
+    logOut: build.mutation<IGetIngredientsDataMitation, void>({
       query: () => ({
         url: 'auth/logout',
         method: 'POST',

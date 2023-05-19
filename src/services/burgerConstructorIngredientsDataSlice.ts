@@ -1,21 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IBurgerConstructorIngredientData } from '../utils/types';
+
+const initialState: { burgerConstructorIngredientsData: IBurgerConstructorIngredientData[] } = {
+  burgerConstructorIngredientsData: [],
+};
 
 const burgerConstructorIngredientsDataSlice = createSlice({
   name: 'burgerConstructorIngredientsData',
-  initialState: {
-    burgerConstructorIngredientsData: [],
-  },
+  initialState,
   reducers: {
     addIngredientData: (state, action) => {
       if (
         state.burgerConstructorIngredientsData.filter(
-          (ingredentData) => ingredentData._id === action.payload._id
+          (ingredentData: IBurgerConstructorIngredientData) =>
+            ingredentData._id === action.payload._id
         ).length === 0 &&
         action.payload.type === 'bun'
       ) {
         state.burgerConstructorIngredientsData = [
           ...state.burgerConstructorIngredientsData.filter(
-            (ingredienData) => ingredienData.type !== 'bun'
+            (ingredienData: IBurgerConstructorIngredientData) => ingredienData.type !== 'bun'
           ),
           {
             ...action.payload,
