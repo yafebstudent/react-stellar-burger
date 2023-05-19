@@ -1,16 +1,17 @@
 /* eslint-disable no-restricted-globals */
-const getCurrentTabName = (containerClassName) => {
+const getCurrentTabName = (containerClassName: string) => {
   const bunsTitleTopCoordinates = Math.round(
-    document.querySelector('#buns').getBoundingClientRect().top + scrollY
+    (document.querySelector('#buns') as HTMLHtmlElement).getBoundingClientRect().top + scrollY
   );
   const saucesTitleTopCoordinates = Math.round(
-    document.querySelector('#sauces').getBoundingClientRect().top + scrollY
+    (document.querySelector('#sauces') as HTMLHtmlElement).getBoundingClientRect().top + scrollY
   );
   const toppingsTitleTopCoordinates = Math.round(
-    document.querySelector('#toppings').getBoundingClientRect().top + scrollY
+    (document.querySelector('#toppings') as HTMLHtmlElement).getBoundingClientRect().top + scrollY
   );
   const ingredientsContainerTopCoordinates = Math.round(
-    document.querySelector(`.${containerClassName}`).getBoundingClientRect().top + scrollY
+    // eslint-disable-next-line prettier/prettier
+    (document.querySelector(`.${containerClassName}`) as HTMLDivElement).getBoundingClientRect().top + scrollY
   );
   const absoluteCoordinates = [
     {
@@ -30,7 +31,7 @@ const getCurrentTabName = (containerClassName) => {
   const minValue = Math.min(...coordinatesValues);
   const currentTabName = absoluteCoordinates.find(
     (coordinates) => coordinates.value === minValue
-  ).tabName;
+  )?.tabName;
 
   return currentTabName;
 };

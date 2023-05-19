@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Modal.module.css';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
-import { ModalPropType } from '../../utils/prop-types';
 import usePopupClose from '../../hooks/usePopupClose';
+import { IModalProps } from '../../utils/types';
 
 const portal = document.getElementById('portal');
-const Modal = (props) => {
+const Modal: FC<IModalProps> = (props) => {
   const { isModalOpen, closeModal, children } = props;
   const activeModalClassName = isModalOpen ? styles.active : '';
   usePopupClose(isModalOpen, () => closeModal());
@@ -28,10 +28,8 @@ const Modal = (props) => {
       </div>
       <ModalOverlay isModalOpen={isModalOpen} />
     </>,
-    portal
+    portal as HTMLDivElement
   );
 };
-
-Modal.propTypes = ModalPropType;
 
 export default Modal;

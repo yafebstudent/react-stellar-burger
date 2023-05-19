@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './ModalOverlay.module.css';
-import { ModalOverlayPropType } from '../../utils/prop-types';
+import { IModalOverlayProps } from '../../utils/types';
 
-const ModalOverlay = (props) => {
+const ModalOverlay: FC<IModalOverlayProps> = (props) => {
   const { isModalOpen } = props;
   const activeModalClassName = isModalOpen ? `${styles.active} popup_opened` : '';
 
   return <div className={`${styles.modalOverlay} ${activeModalClassName}`} />;
 };
-
-ModalOverlay.propTypes = ModalOverlayPropType;
 
 export default ModalOverlay;

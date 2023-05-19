@@ -1,21 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { deleteIngredientData } from '../../services/burgerConstructorIngredientsDataSlice';
 import styles from './BurgerConstructorToppingElement.module.css';
-import { BurgerConstructorToppingElementPropType } from '../../utils/prop-types';
+import { IBurgerConstructorToppingElementProps } from '../../utils/types';
 
-const BurgerConstructorToppingElement = (props) => {
+const BurgerConstructorToppingElement: FC<IBurgerConstructorToppingElementProps> = (props) => {
   const { ingredientData, index, swapIngredients } = props;
   const dispatch = useDispatch();
   const handleConstructorElementDelete = () => {
     dispatch(deleteIngredientData(index));
   };
-  const ingredientContainerRef = useRef(null);
+  const ingredientContainerRef = useRef<HTMLLIElement>(null);
   const [, drop] = useDrop({
     accept: 'toppingElement',
-    hover(item, monitor) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    hover(item: any, monitor) {
       if (!ingredientContainerRef.current) {
         return;
       }
@@ -25,10 +26,10 @@ const BurgerConstructorToppingElement = (props) => {
       if (dragIndex === hoverIndex) {
         return;
       }
-      const hoverBoundingRect = ingredientContainerRef.current?.getBoundingClientRect();
+      const hoverBoundingRect = ingredientContainerRef.current.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -57,7 +58,7 @@ const BurgerConstructorToppingElement = (props) => {
       ref={ingredientContainerRef}
       style={{ opacity: toppingElementOpacity }}
     >
-      <DragIcon type={ingredientData.type} />
+      <DragIcon type="primary" />
       <ConstructorElement
         text={ingredientData.name}
         price={ingredientData.price}
@@ -67,7 +68,5 @@ const BurgerConstructorToppingElement = (props) => {
     </li>
   );
 };
-
-BurgerConstructorToppingElement.propTypes = BurgerConstructorToppingElementPropType;
 
 export default BurgerConstructorToppingElement;

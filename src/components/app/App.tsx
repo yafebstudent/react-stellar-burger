@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import MainPage from '../../pages/MainPage';
 import Layout from '../Layout';
 import LoginPage from '../../pages/login-page/LoginPage';
@@ -14,13 +15,14 @@ import Modal from '../Modal/Modal';
 import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import useModal from '../../hooks/useModal';
 
-const App = () => {
+const App: FC = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
   const { isModalOpen, closeModal } = useModal();
   const modalCloseButtonClickHandler = () => {
     closeModal();
-    dispatchEvent(clearActiveIngredientData());
+    dispatch(clearActiveIngredientData());
   };
 
   return (
@@ -31,7 +33,10 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} />}>
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement outlet={<Profile />} anonymous={false} />}
+        >
           <Route path="/profile/orders" element={<main>{null}</main>} />
         </Route>
         <Route path="/ingredients/:id" element={<IngredientDetails />} />

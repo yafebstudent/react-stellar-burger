@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './BurgerIngredient.module.css';
-import { BurgerIngredientPropType } from '../../utils/prop-types';
 import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
+import { IBurgerConstructorIngredientData, IBurgerIngredientProps } from '../../utils/types';
+import { RootState } from '../../services/store';
 
-const BurgerIngredient = (props) => {
+const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { ingredientData, openModal } = props;
@@ -23,10 +24,12 @@ const BurgerIngredient = (props) => {
     }),
   });
   const burgerConstructorIngredientsData = useSelector(
-    (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
+    (state: RootState) =>
+      state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
   const ingredientCount = burgerConstructorIngredientsData.filter(
-    (constructorIngredientData) => constructorIngredientData._id === ingredientData._id
+    (constructorIngredientData: IBurgerConstructorIngredientData) =>
+      constructorIngredientData._id === ingredientData._id
   ).length;
 
   return (
@@ -59,7 +62,5 @@ const BurgerIngredient = (props) => {
     </li>
   );
 };
-
-BurgerIngredient.propTypes = BurgerIngredientPropType;
 
 export default BurgerIngredient;

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, FC } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './BurgerConstructor.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../order-details/OrderDetails';
 import useModal from '../../hooks/useModal';
@@ -26,8 +25,11 @@ import {
 import burgerIcon from '../../images/burger.png';
 import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 import BurgerConstructorToppingElement from '../burger-constructor-topping-element/BurgerConstructorToppingElement';
+import styles from './BurgerConstructor.module.css';
+import { IIngredientData } from '../../utils/types';
+import { RootState } from '../../services/store';
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,18 +40,23 @@ const BurgerConstructor = () => {
   );
   const [getOrderData, { isLoading }] = useGetOrderDataMutation();
   const burgerConstructorIngredientsData = useSelector(
-    (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
+    (state: RootState) =>
+      state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
   const orderButtonClickHandler = () => {
     if (userDataResponseData) {
       openModal();
       getOrderData({
         ingredients: [
-          ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
+          ...burgerConstructorIngredientsData.map(
+            (ingredientData: IIngredientData) => ingredientData._id
+          ),
         ],
       })
         .then((data) => {
-          dispatch(setOrderDetailsData(data.data));
+          if ('data' in data) {
+            dispatch(setOrderDetailsData(data.data));
+          }
           dispatch(clearBurgerConstructor());
         })
         .catch((error) => {
@@ -64,11 +71,13 @@ const BurgerConstructor = () => {
     closeModal();
     dispatch(clearOrderDetailsData());
   };
-  const getIngredientDataById = (id) =>
-    ingredientsResponseData.data.find((ingredientData) => ingredientData._id === id);
+  const getIngredientDataById = (id: string) =>
+    ingredientsResponseData?.data.find(
+      (ingredientData: IIngredientData) => ingredientData._id === id
+    );
   const [{ isHover: isConstructorHover }, constructorRef] = useDrop({
     accept: 'ingredientItem',
-    drop(item) {
+    drop(item: IIngredientData) {
       dispatch(
         addIngredientData({
           ...getIngredientDataById(item._id),
@@ -82,12 +91,15 @@ const BurgerConstructor = () => {
   const totalCost = useMemo(() => {
     const bunsCount = 2;
 
-    return burgerConstructorIngredientsData.reduce((sum, ingredientData) => {
-      if (ingredientData.type === 'bun') {
-        return sum + ingredientData.price * bunsCount;
-      }
-      return sum + ingredientData.price;
-    }, 0);
+    return burgerConstructorIngredientsData.reduce(
+      (sum: number, ingredientData: IIngredientData) => {
+        if (ingredientData.type === 'bun') {
+          return sum + ingredientData.price * bunsCount;
+        }
+        return sum + ingredientData.price;
+      },
+      0
+    );
   }, [burgerConstructorIngredientsData]);
   const swapIngredients = useCallback(
     (dragIndex, hoverIndex) => {
@@ -128,7 +140,7 @@ const BurgerConstructor = () => {
                 type="top"
                 isLocked
                 text="Перетяните булочку сюда (верх)"
-                price="0"
+                price={0}
                 thumbnail={burgerIcon}
               />
             ) : (
@@ -150,7 +162,7 @@ const BurgerConstructor = () => {
           <li>
             <ul className={styles.nestedList}>
               {burgerConstructorIngredientsData.map(
-                (ingredientData, index) =>
+                (ingredientData, index: number) =>
                   ingredientData.type !== 'bun' && (
                     <BurgerConstructorToppingElement
                       ingredientData={ingredientData}
@@ -168,7 +180,7 @@ const BurgerConstructor = () => {
                 type="bottom"
                 isLocked
                 text="Перетяните булочку сюда (низ)"
-                price="0"
+                price={0}
                 thumbnail={burgerIcon}
               />
             ) : (

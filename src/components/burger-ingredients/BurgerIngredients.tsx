@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -11,8 +11,9 @@ import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
 import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import getCurrentTabName from './getCurrentTabName';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
+import { IIngredientData } from '../../utils/types';
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [currentTab, setCurrentTab] = useState('buns');
@@ -24,11 +25,11 @@ const BurgerIngredients = () => {
     window.history.replaceState(null, '', location.pathname);
   };
   const scrollHandler = () => {
-    setCurrentTab(getCurrentTabName(styles.burgerIngredients__items));
+    setCurrentTab(getCurrentTabName(styles.burgerIngredients__items) as string);
   };
-  const tabClickHandler = (tabName) => {
+  const tabClickHandler = (tabName: string) => {
     setCurrentTab(tabName);
-    document.querySelector(`#${tabName}`).scrollIntoView({ block: 'start', behavior: 'smooth' });
+    document.querySelector(`#${tabName}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' });
   };
 
   return (
@@ -50,8 +51,8 @@ const BurgerIngredients = () => {
           Булки
         </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsResponseData.data.map(
-            (ingredientData) =>
+          {ingredientsResponseData?.data.map(
+            (ingredientData: IIngredientData) =>
               ingredientData.type === 'bun' && (
                 <BurgerIngredient
                   key={ingredientData._id}
@@ -65,8 +66,8 @@ const BurgerIngredients = () => {
           Соусы
         </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsResponseData.data.map(
-            (ingredientData) =>
+          {ingredientsResponseData?.data.map(
+            (ingredientData: IIngredientData) =>
               ingredientData.type === 'sauce' && (
                 <BurgerIngredient
                   key={ingredientData._id}
@@ -80,8 +81,8 @@ const BurgerIngredients = () => {
           Начинки
         </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
-          {ingredientsResponseData.data.map(
-            (ingredientData) =>
+          {ingredientsResponseData?.data.map(
+            (ingredientData: IIngredientData) =>
               ingredientData.type === 'main' && (
                 <BurgerIngredient
                   key={ingredientData._id}

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './OrderDetails.module.css';
 import checkoutDoneImage from '../../images/checkout-done.gif';
+import { RootState } from '../../services/store';
 
-const OrderDetails = () => {
-  const orderData = useSelector((state) => state.orderDetailsDataReducer.orderDetailsData);
+const OrderDetails: FC = () => {
+  const orderData = useSelector(
+    (state: RootState) => state.orderDetailsDataReducer.orderDetailsData
+  );
 
   return (
     <div className={styles.orderDetails}>

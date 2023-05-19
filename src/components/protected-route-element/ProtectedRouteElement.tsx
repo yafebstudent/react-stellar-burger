@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { ProtectedRouteElementPropType } from '../../utils/prop-types';
+import { RootState } from '../../services/store';
+import { TProtectedRouteProps } from '../../utils/types';
 
-const ProtectedRouteElement = (props) => {
-  const { element, anonymous = false } = props;
-  const userData = useSelector((state) => state.userDataReducer.userData);
+const ProtectedRouteElement: FC<TProtectedRouteProps> = (props) => {
+  const { anonymous, outlet } = props;
+  const userData = useSelector((state: RootState) => state.userDataReducer.userData);
   const location = useLocation();
   const from = location.state?.from || '/';
 
@@ -17,9 +18,7 @@ const ProtectedRouteElement = (props) => {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  return element;
+  return outlet;
 };
-
-ProtectedRouteElement.propTypes = ProtectedRouteElementPropType;
 
 export default ProtectedRouteElement;

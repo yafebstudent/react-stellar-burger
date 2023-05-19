@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   BurgerIcon,
@@ -6,10 +6,10 @@ import {
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './AppHeader.module.css';
 import setLinkActiveStyle from '../../utils/setLinkActiveStyle';
+import styles from './AppHeader.module.css';
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.navbar}>

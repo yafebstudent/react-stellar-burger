@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import AppHeader from './app-header/AppHeader';
 
-const Layout = () => {
+const Layout: FC = () => {
   return (
     <>
       <AppHeader />
