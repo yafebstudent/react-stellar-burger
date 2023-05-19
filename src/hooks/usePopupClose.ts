@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 
-export default function usePopupClose(isOpen, closePopup) {
+export default function usePopupClose(isOpen: boolean, closePopup: () => void) {
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleOverlay = (event) => {
-      if (event.target.classList.contains('popup_opened')) {
+    const handleOverlay = (event: MouseEvent) => {
+      if ((event.target as Element).classList.contains('popup_opened')) {
         closePopup();
       }
     };
 
-    const handleEscape = (e) => {
+    const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         closePopup();
       }
