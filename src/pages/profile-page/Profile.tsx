@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, FC } from 'react';
 import {
   Input,
   Button,
@@ -18,7 +18,7 @@ import {
 import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
 import { clearUserData } from '../../services/userDataSlice';
 
-const Profile = () => {
+const Profile: FC = () => {
   let content;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,8 +35,8 @@ const Profile = () => {
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  const [isButtonsHidden, setIsButtonHidden] = useState('true');
-  const nameChangeHandler = (value) => {
+  const [isButtonsHidden, setIsButtonHidden] = useState(true);
+  const nameChangeHandler = (value: string) => {
     setNameValue(value);
     if (value && value !== userDataResponseData?.user.name) {
       setIsButtonHidden(false);
@@ -44,7 +44,7 @@ const Profile = () => {
       setIsButtonHidden(true);
     }
   };
-  const emailChangeHandler = (value) => {
+  const emailChangeHandler = (value: string) => {
     setEmailValue(value);
     if (value && value !== userDataResponseData?.user.email) {
       setIsButtonHidden(false);
@@ -52,7 +52,7 @@ const Profile = () => {
       setIsButtonHidden(true);
     }
   };
-  const passwordChangeHandler = (value) => {
+  const passwordChangeHandler = (value: string) => {
     setPasswordValue(value);
     if (value && value.length >= 6) {
       setIsButtonHidden(false);
@@ -87,7 +87,7 @@ const Profile = () => {
       event.stopPropagation();
       logOut()
         .then((data) => {
-          if (data in data) {
+          if ('data' in data) {
             console.log(data.data.message);
           }
           localStorage.removeItem('refreshToken');
@@ -133,7 +133,7 @@ const Profile = () => {
             value={emailValue}
             name="email"
             placeholder="Логин"
-            icon="EditIcon"
+            isIcon
             extraClass="mb-6"
           />
         </li>

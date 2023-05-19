@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import LoadingSpinner from '../components/loading-spinner/LoadingSpinner';
@@ -6,7 +6,7 @@ import { useGetIngredientsDataQuery } from '../services/stellarBurgersAPI';
 import BurgerIngredients from '../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../components/burger-constructor/BurgerConstructor';
 
-const MainPage = () => {
+const MainPage: FC = () => {
   const { isError, isLoading, isFetching, isSuccess } = useGetIngredientsDataQuery();
   let content;
 

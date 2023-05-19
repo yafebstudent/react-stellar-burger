@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './ForgotPasswordPage.module.css';
 import { useGetResetEmailMutation, useGetUserDataQuery } from '../../services/stellarBurgersAPI';
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [emailValue, setEmailValue] = useState('');
   const [getResetEmail] = useGetResetEmailMutation();
   const { isSuccess } = useGetUserDataQuery(localStorage.getItem('accessToken') || '');
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!emailValue) {
       return;

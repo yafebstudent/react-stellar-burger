@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './ResetPasswordPage.module.css';
 import { useResetPasswordMutation } from '../../services/stellarBurgersAPI';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [passwordValue, setPasswordValue] = useState('');
   const [codeValue, setCodeValue] = useState('');
   const [resetPassword] = useResetPasswordMutation();
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!passwordValue) {
       return;

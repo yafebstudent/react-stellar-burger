@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import {
   Input,
   EmailInput,
@@ -10,16 +10,17 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './RegisterPage.module.css';
 import { useRegisterUserMutation } from '../../services/stellarBurgersAPI';
+import { RootState } from '../../services/store';
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = useSelector((state) => state.userDataReducer.userData);
+  const userData = useSelector((state: RootState) => state.userDataReducer.userData);
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [nameValue, setNameValue] = useState('');
   const [registerUser] = useRegisterUserMutation();
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!emailValue || !passwordValue || !nameValue) {
       return;

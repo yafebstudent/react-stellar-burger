@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Page404.module.css';
 import alienImage from '../../images/alien.png';
 
-const Page404 = () => {
+const Page404: FC = () => {
   return (
     <main className={`${styles.page404}`}>
       <img className="mb-15" src={alienImage} alt="alien" />

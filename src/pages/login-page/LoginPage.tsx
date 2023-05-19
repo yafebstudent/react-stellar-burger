@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { FC } from 'react';
 import {
   EmailInput,
   PasswordInput,
@@ -10,14 +10,15 @@ import { useSelector } from 'react-redux';
 import styles from './LoginPage.module.css';
 import { useAuthUserMutation } from '../../services/stellarBurgersAPI';
 import useForm from '../../hooks/useForm';
+import { RootState } from '../../services/store';
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { values: inputValues, handleChange } = useForm({ email: '', password: '' });
-  const userData = useSelector((state) => state.userDataReducer.userData);
+  const userData = useSelector((state: RootState) => state.userDataReducer.userData);
   const [authUser] = useAuthUserMutation();
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!inputValues.email || !inputValues.password) {
       return;
@@ -27,23 +28,25 @@ const LoginPage = () => {
       password: inputValues.password,
     })
       .then((data) => {
-        const { data: responseData } = data;
-        let accessToken;
-        let refreshToken;
+        if ('data' in data) {
+          const { data: responseData } = data;
+          let accessToken;
+          let refreshToken;
 
-        if ('accessToken' in responseData) {
-          [, accessToken] = responseData.accessToken.split('Bearer ');
-          if (accessToken) {
-            localStorage.setItem('accessToken', accessToken);
+          if ('accessToken' in responseData) {
+            [, accessToken] = responseData.accessToken.split('Bearer ');
+            if (accessToken) {
+              localStorage.setItem('accessToken', accessToken);
+            }
           }
-        }
-        if ('refreshToken' in responseData) {
-          refreshToken = responseData.refreshToken;
-          if (refreshToken) {
-            localStorage.setItem('refreshToken', refreshToken);
+          if ('refreshToken' in responseData) {
+            refreshToken = responseData.refreshToken;
+            if (refreshToken) {
+              localStorage.setItem('refreshToken', refreshToken);
+            }
           }
+          navigate(`${location.state?.from.pathname || '/'}`, { replace: true });
         }
-        navigate(`${location.state?.from.pathname || '/'}`, { replace: true });
       })
       .catch((error) => {
         console.error(error);
