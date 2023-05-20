@@ -46,9 +46,7 @@ const BurgerConstructor: FC = () => {
       openModal();
       getOrderData({
         ingredients: [
-          ...burgerConstructorIngredientsData.map(
-            (ingredientData: IIngredientData) => ingredientData._id
-          ),
+          ...burgerConstructorIngredientsData.map((ingredientData) => ingredientData._id),
         ],
       })
         .then((data) => {
@@ -70,9 +68,7 @@ const BurgerConstructor: FC = () => {
     dispatch(clearOrderDetailsData());
   };
   const getIngredientDataById = (id: string) =>
-    ingredientsResponseData?.data.find(
-      (ingredientData: IIngredientData) => ingredientData._id === id
-    );
+    ingredientsResponseData?.data.find((ingredientData) => ingredientData._id === id);
   const [{ isHover: isConstructorHover }, constructorRef] = useDrop({
     accept: 'ingredientItem',
     drop(item: IIngredientData) {
@@ -89,15 +85,12 @@ const BurgerConstructor: FC = () => {
   const totalCost = useMemo(() => {
     const bunsCount = 2;
 
-    return burgerConstructorIngredientsData.reduce(
-      (sum: number, ingredientData: IIngredientData) => {
-        if (ingredientData.type === 'bun') {
-          return sum + ingredientData.price * bunsCount;
-        }
-        return sum + ingredientData.price;
-      },
-      0
-    );
+    return burgerConstructorIngredientsData.reduce((sum: number, ingredientData) => {
+      if (ingredientData.type === 'bun') {
+        return sum + ingredientData.price * bunsCount;
+      }
+      return sum + ingredientData.price;
+    }, 0);
   }, [burgerConstructorIngredientsData]);
   const swapIngredients = useCallback(
     (dragIndex, hoverIndex) => {

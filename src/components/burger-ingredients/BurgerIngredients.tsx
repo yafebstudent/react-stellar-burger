@@ -10,7 +10,6 @@ import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
 import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import getCurrentTabName from './getCurrentTabName';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
-import { IIngredientData } from '../../utils/types';
 import { useAppDispatch } from '../../hooks/hooks';
 
 const BurgerIngredients: FC = () => {
@@ -52,7 +51,7 @@ const BurgerIngredients: FC = () => {
         </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
           {ingredientsResponseData?.data.map(
-            (ingredientData: IIngredientData) =>
+            (ingredientData) =>
               ingredientData.type === 'bun' && (
                 <BurgerIngredient
                   key={ingredientData._id}
@@ -67,7 +66,7 @@ const BurgerIngredients: FC = () => {
         </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
           {ingredientsResponseData?.data.map(
-            (ingredientData: IIngredientData) =>
+            (ingredientData) =>
               ingredientData.type === 'sauce' && (
                 <BurgerIngredient
                   key={ingredientData._id}
@@ -82,7 +81,7 @@ const BurgerIngredients: FC = () => {
         </h2>
         <ul className={`${styles.burgerIngredientsList} pl-4`}>
           {ingredientsResponseData?.data.map(
-            (ingredientData: IIngredientData) =>
+            (ingredientData) =>
               ingredientData.type === 'main' && (
                 <BurgerIngredient
                   key={ingredientData._id}

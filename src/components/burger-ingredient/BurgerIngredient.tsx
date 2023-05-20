@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './BurgerIngredient.module.css';
 import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
-import { IBurgerConstructorIngredientData, IBurgerIngredientProps } from '../../utils/types';
+import { IBurgerIngredientProps } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
@@ -26,8 +26,7 @@ const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
     (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
   const ingredientCount = burgerConstructorIngredientsData.filter(
-    (constructorIngredientData: IBurgerConstructorIngredientData) =>
-      constructorIngredientData._id === ingredientData._id
+    (constructorIngredientData) => constructorIngredientData._id === ingredientData._id
   ).length;
 
   return (
