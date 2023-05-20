@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import MainPage from '../../pages/MainPage';
 import Layout from '../Layout';
 import LoginPage from '../../pages/login-page/LoginPage';
@@ -14,9 +13,10 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../Modal/Modal';
 import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import useModal from '../../hooks/useModal';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const App: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
   const { isModalOpen, closeModal } = useModal();

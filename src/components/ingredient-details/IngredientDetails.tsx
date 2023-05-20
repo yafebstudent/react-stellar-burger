@@ -1,19 +1,18 @@
 import React, { useEffect, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.css';
 import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
 import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import LoadingSpinner from '../loading-spinner/LoadingSpinner';
-import { RootState } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const IngredientDetails: FC = () => {
   let content;
-  const activeIngredientData = useSelector(
-    (state: RootState) => state.activeIngredientDataReducer.activeIngredientData
+  const activeIngredientData = useAppSelector(
+    (state) => state.activeIngredientDataReducer.activeIngredientData
   );
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     data: ingredientsResponseData,
     isLoading,

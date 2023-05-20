@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styles from './BurgerIngredients.module.css';
 import Modal from '../Modal/Modal';
@@ -12,9 +11,10 @@ import { clearActiveIngredientData } from '../../services/activeIngredientDataSl
 import getCurrentTabName from './getCurrentTabName';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import { IIngredientData } from '../../utils/types';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const BurgerIngredients: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const [currentTab, setCurrentTab] = useState('buns');
   const { isModalOpen, openModal, closeModal } = useModal();

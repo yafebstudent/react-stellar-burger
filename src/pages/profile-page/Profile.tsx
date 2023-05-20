@@ -7,7 +7,6 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import styles from './Profile.module.css';
 import setLinkActiveStyle from '../../utils/setLinkActiveStyle';
 import {
@@ -17,10 +16,11 @@ import {
 } from '../../services/stellarBurgersAPI';
 import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
 import { clearUserData } from '../../services/userDataSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const Profile: FC = () => {
   let content;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     data: userDataResponseData,

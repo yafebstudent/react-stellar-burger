@@ -6,17 +6,16 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import styles from './LoginPage.module.css';
 import { useAuthUserMutation } from '../../services/stellarBurgersAPI';
 import useForm from '../../hooks/useForm';
-import { RootState } from '../../services/store';
+import { useAppSelector } from '../../hooks/hooks';
 
 const LoginPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { values: inputValues, handleChange } = useForm({ email: '', password: '' });
-  const userData = useSelector((state: RootState) => state.userDataReducer.userData);
+  const userData = useAppSelector((state) => state.userDataReducer.userData);
   const [authUser] = useAuthUserMutation();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

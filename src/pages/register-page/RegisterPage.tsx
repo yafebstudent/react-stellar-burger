@@ -7,15 +7,14 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import styles from './RegisterPage.module.css';
 import { useRegisterUserMutation } from '../../services/stellarBurgersAPI';
-import { RootState } from '../../services/store';
+import { useAppSelector } from '../../hooks/hooks';
 
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = useSelector((state: RootState) => state.userDataReducer.userData);
+  const userData = useAppSelector((state) => state.userDataReducer.userData);
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [nameValue, setNameValue] = useState('');

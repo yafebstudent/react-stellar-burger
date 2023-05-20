@@ -4,7 +4,6 @@ import {
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -27,21 +26,20 @@ import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 import BurgerConstructorToppingElement from '../burger-constructor-topping-element/BurgerConstructorToppingElement';
 import styles from './BurgerConstructor.module.css';
 import { IIngredientData } from '../../utils/types';
-import { RootState } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
   const { data: userDataResponseData } = useGetUserDataQuery(
     localStorage.getItem('accessToken') || ''
   );
   const [getOrderData, { isLoading }] = useGetOrderDataMutation();
-  const burgerConstructorIngredientsData = useSelector(
-    (state: RootState) =>
-      state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
+  const burgerConstructorIngredientsData = useAppSelector(
+    (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
   const orderButtonClickHandler = () => {
     if (userDataResponseData) {

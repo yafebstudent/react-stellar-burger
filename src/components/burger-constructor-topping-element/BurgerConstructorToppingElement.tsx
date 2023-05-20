@@ -1,14 +1,14 @@
 import React, { useRef, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { deleteIngredientData } from '../../services/burgerConstructorIngredientsDataSlice';
 import styles from './BurgerConstructorToppingElement.module.css';
 import { IBurgerConstructorToppingElementProps } from '../../utils/types';
+import { useAppDispatch } from '../../hooks/hooks';
 
 const BurgerConstructorToppingElement: FC<IBurgerConstructorToppingElementProps> = (props) => {
   const { ingredientData, index, swapIngredients } = props;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleConstructorElementDelete = () => {
     dispatch(deleteIngredientData(index));
   };

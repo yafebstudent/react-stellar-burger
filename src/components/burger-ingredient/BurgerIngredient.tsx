@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './BurgerIngredient.module.css';
 import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import { IBurgerConstructorIngredientData, IBurgerIngredientProps } from '../../utils/types';
-import { RootState } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const { ingredientData, openModal } = props;
   const burgerIngredientClickHandler = () => {
@@ -23,9 +22,8 @@ const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
       isDragging: monitor.isDragging(),
     }),
   });
-  const burgerConstructorIngredientsData = useSelector(
-    (state: RootState) =>
-      state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
+  const burgerConstructorIngredientsData = useAppSelector(
+    (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
   const ingredientCount = burgerConstructorIngredientsData.filter(
     (constructorIngredientData: IBurgerConstructorIngredientData) =>
