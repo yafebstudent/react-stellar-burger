@@ -23,5 +23,6 @@
   "include": [
     ".eslintrc.cjs",
     "src",
+    "./declarations",
   ]
 }
