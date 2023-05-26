@@ -11,7 +11,7 @@ import Profile from '../../pages/profile-page/Profile';
 import ProtectedRouteElement from '../protected-route-element/ProtectedRouteElement';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../Modal/Modal';
-import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
+import { clearActiveIngredientData } from '../../services/slices/activeIngredientDataSlice';
 import useModal from '../../hooks/useModal';
 import { useAppDispatch } from '../../hooks/hooks';
 

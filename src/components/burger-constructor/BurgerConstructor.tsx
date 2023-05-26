@@ -14,12 +14,12 @@ import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
 } from '../../services/stellarBurgersAPI';
-import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
+import { clearOrderDetailsData, setOrderDetailsData } from '../../services/slices/orderDetailsDataSlice';
 import {
   addIngredientData,
   addSortedIngredients,
   clearBurgerConstructor,
-} from '../../services/burgerConstructorIngredientsDataSlice';
+} from '../../services/slices/burgerConstructorIngredientsDataSlice';
 import burgerIcon from '../../images/burger.png';
 import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 import BurgerConstructorToppingElement from '../burger-constructor-topping-element/BurgerConstructorToppingElement';

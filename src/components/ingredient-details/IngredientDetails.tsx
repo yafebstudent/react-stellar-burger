@@ -2,7 +2,7 @@ import React, { useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.css';
 import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
-import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
+import { setActiveIngredientData } from '../../services/slices/activeIngredientDataSlice';
 import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
@@ -37,9 +37,8 @@ const IngredientDetails: FC = () => {
       <>
         <p
           style={{ textAlign: id ? 'center' : 'left' }}
-          className={`${styles.ingredientDetails__title} text text_type_main-large ${
-            id ? '' : 'mt-10 ml-10'
-          }`}
+          className={`${styles.ingredientDetails__title} text text_type_main-large ${id ? '' : 'mt-10 ml-10'
+            }`}
         >
           Детали ингредиента
         </p>

@@ -15,7 +15,7 @@ import {
   useUpdateUserDataMutation,
 } from '../../services/stellarBurgersAPI';
 import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
-import { clearUserData } from '../../services/userDataSlice';
+import { clearUserData } from '../../services/slices/userDataSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import getCookie from '../../utils/getCookie';
 import removeCookie from '../../utils/removeCookie';

@@ -16,6 +16,27 @@ export interface IIngredientData {
 export interface IBurgerConstructorIngredientData extends IIngredientData {
   listKey: string;
 }
+export interface IBurgerConstructorIngredientsDataState {
+  burgerConstructorIngredientsData: IBurgerConstructorIngredientData[];
+}
+export interface IOrderDetailsDataState {
+  name: string;
+  order: {
+    number: number;
+  };
+  success: boolean;
+}
+export interface IUserDataState {
+  userData: {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+    user: {
+      email: string;
+      name: string;
+    };
+  } | null;
+}
 export interface IGetIngredientsDataQuery {
   data: IIngredientData[];
   success: boolean;

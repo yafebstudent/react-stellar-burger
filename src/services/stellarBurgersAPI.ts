@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import baseUrl from '../utils/apiConstants';
-import { setUser } from './userDataSlice';
+import { setUser } from './slices/userDataSlice';
 import { IGetIngredientsDataMitation, IGetIngredientsDataQuery } from '../utils/types';
 import getCookie from '../utils/getCookie';
 

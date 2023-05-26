@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import activeIngredientDataReducer from './activeIngredientDataSlice';
-import orderDetailsDataReducer from './orderDetailsDataSlice';
-import burgerConstructorIngredientsDataReducer from './burgerConstructorIngredientsDataSlice';
-import userDataReducer from './userDataSlice';
+import activeIngredientDataReducer from './slices/activeIngredientDataSlice';
+import orderDetailsDataReducer from './slices/orderDetailsDataSlice';
+import burgerConstructorIngredientsDataReducer from './slices/burgerConstructorIngredientsDataSlice';
+import userDataReducer from './slices/userDataSlice';
 import { stellarBurgersAPI } from './stellarBurgersAPI';
 
 const rootReducer = combineReducers({

@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IBurgerConstructorIngredientData } from '../utils/types';
+import {
+  IBurgerConstructorIngredientData,
+  IBurgerConstructorIngredientsDataState,
+} from '../../utils/types';
 
-const initialState: { burgerConstructorIngredientsData: IBurgerConstructorIngredientData[] } = {
+const initialState: IBurgerConstructorIngredientsDataState = {
   burgerConstructorIngredientsData: [],
 };
 
