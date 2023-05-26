@@ -9,12 +9,12 @@ import {
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
 import { useRegisterUserMutation } from '../../services/stellarBurgersAPI';
-import { useAppSelector } from '../../hooks/hooks';
+import getCookie from '../../utils/getCookie';
 
 const RegisterPage: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = useAppSelector((state) => state.userDataReducer.userData);
+  const isAuthUser = !!getCookie('accessToken');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [nameValue, setNameValue] = useState('');
@@ -38,7 +38,7 @@ const RegisterPage: FC = () => {
       });
   };
 
-  if (userData) {
+  if (isAuthUser) {
     return <Navigate to={`${location.state?.from.pathname || '/'}`} />;
   }
 

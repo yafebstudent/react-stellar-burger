@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import baseUrl from '../utils/apiConstants';
 import { setUser } from './userDataSlice';
 import { IGetIngredientsDataMitation, IGetIngredientsDataQuery } from '../utils/types';
+import getCookie from '../utils/getCookie';
 
 export const stellarBurgersAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -83,7 +84,7 @@ export const stellarBurgersAPI = createApi({
         url: 'auth/logout',
         method: 'POST',
         body: {
-          token: localStorage.getItem('refreshToken') || '',
+          token: getCookie('refreshToken') || '',
         },
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
@@ -97,7 +98,7 @@ export const stellarBurgersAPI = createApi({
         body: payload,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          Authorization: `Bearer ${localStorage.getItem('accessToken') || ''}`,
+          Authorization: `Bearer ${getCookie('accessToken') || ''}`,
         },
       }),
     }),

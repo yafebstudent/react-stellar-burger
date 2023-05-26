@@ -48,3 +48,11 @@ interface ISetLinkActiveStyleArg {
   isActive: boolean;
 }
 export type TSetLinkActiveStyle = (object: ISetLinkActiveStyleArg) => { [key: string]: string };
+export type TGetCookie = (name: string) => string | undefined;
+export type TRemoveCookie = (name: string) => void;
+interface ISetCookieProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+  expires?: number | Date | string;
+}
+export type TSetCookie = (tokenName: string, value: string, props?: ISetCookieProps) => void;

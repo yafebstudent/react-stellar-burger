@@ -17,6 +17,8 @@ import {
 import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
 import { clearUserData } from '../../services/userDataSlice';
 import { useAppDispatch } from '../../hooks/hooks';
+import getCookie from '../../utils/getCookie';
+import removeCookie from '../../utils/removeCookie';
 
 const Profile: FC = () => {
   let content;
@@ -29,7 +31,7 @@ const Profile: FC = () => {
     isFetching,
     isError,
     refetch,
-  } = useGetUserDataQuery(localStorage.getItem('accessToken') || '');
+  } = useGetUserDataQuery(getCookie('accessToken') || '');
   const [updateUserData] = useUpdateUserDataMutation();
   const [logOut] = useLogOutMutation();
   const [nameValue, setNameValue] = useState('');
@@ -90,8 +92,8 @@ const Profile: FC = () => {
           if ('data' in data) {
             console.log(data.data.message);
           }
-          localStorage.removeItem('refreshToken');
-          localStorage.removeItem('accessToken');
+          removeCookie('refreshToken');
+          removeCookie('accessToken');
           dispatch(clearUserData());
           navigate('/login', { replace: true });
         })

@@ -13,7 +13,6 @@ import useModal from '../../hooks/useModal';
 import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
-  useGetUserDataQuery,
 } from '../../services/stellarBurgersAPI';
 import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
 import {
@@ -27,22 +26,21 @@ import BurgerConstructorToppingElement from '../burger-constructor-topping-eleme
 import styles from './BurgerConstructor.module.css';
 import { IIngredientData } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import getCookie from '../../utils/getCookie';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const isAuthUser = !!getCookie('accessToken');
   const { isModalOpen, openModal, closeModal } = useModal();
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
-  const { data: userDataResponseData } = useGetUserDataQuery(
-    localStorage.getItem('accessToken') || ''
-  );
   const [getOrderData, { isLoading }] = useGetOrderDataMutation();
   const burgerConstructorIngredientsData = useAppSelector(
     (state) => state.burgerConstructorIngredientsDataReducer.burgerConstructorIngredientsData
   );
   const orderButtonClickHandler = () => {
-    if (userDataResponseData) {
+    if (isAuthUser) {
       openModal();
       getOrderData({
         ingredients: [

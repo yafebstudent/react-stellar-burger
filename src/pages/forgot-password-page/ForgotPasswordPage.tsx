@@ -3,14 +3,15 @@ import React, { useState, FC } from 'react';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './ForgotPasswordPage.module.css';
-import { useGetResetEmailMutation, useGetUserDataQuery } from '../../services/stellarBurgersAPI';
+import { useGetResetEmailMutation } from '../../services/stellarBurgersAPI';
+import getCookie from '../../utils/getCookie';
 
 const ForgotPasswordPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isAuthUser = !!getCookie('accessToken');
   const [emailValue, setEmailValue] = useState('');
   const [getResetEmail] = useGetResetEmailMutation();
-  const { isSuccess } = useGetUserDataQuery(localStorage.getItem('accessToken') || '');
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!emailValue) {
@@ -28,7 +29,7 @@ const ForgotPasswordPage: FC = () => {
       });
   };
 
-  if (isSuccess) {
+  if (isAuthUser) {
     return <Navigate to="/" replace />;
   }
 

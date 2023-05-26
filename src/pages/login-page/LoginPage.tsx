@@ -9,13 +9,14 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 import { useAuthUserMutation } from '../../services/stellarBurgersAPI';
 import useForm from '../../hooks/useForm';
-import { useAppSelector } from '../../hooks/hooks';
+import setCookie from '../../utils/setCookie';
+import getCookie from '../../utils/getCookie';
 
 const LoginPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isAuthUser = !!getCookie('accessToken');
   const { values: inputValues, handleChange } = useForm({ email: '', password: '' });
-  const userData = useAppSelector((state) => state.userDataReducer.userData);
   const [authUser] = useAuthUserMutation();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,13 +36,13 @@ const LoginPage: FC = () => {
           if ('accessToken' in responseData) {
             [, accessToken] = responseData.accessToken.split('Bearer ');
             if (accessToken) {
-              localStorage.setItem('accessToken', accessToken);
+              setCookie('accessToken', accessToken);
             }
           }
           if ('refreshToken' in responseData) {
             refreshToken = responseData.refreshToken;
             if (refreshToken) {
-              localStorage.setItem('refreshToken', refreshToken);
+              setCookie('refreshToken', refreshToken);
             }
           }
           navigate(`${location.state?.from.pathname || '/'}`, { replace: true });
@@ -52,7 +53,7 @@ const LoginPage: FC = () => {
       });
   };
 
-  if (userData) {
+  if (isAuthUser) {
     return <Navigate to={`${location.state?.from.pathname || '/'}`} />;
   }
 

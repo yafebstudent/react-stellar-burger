@@ -1,19 +1,19 @@
 import React, { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { TProtectedRouteProps } from '../../utils/types';
-import { useAppSelector } from '../../hooks/hooks';
+import getCookie from '../../utils/getCookie';
 
 const ProtectedRouteElement: FC<TProtectedRouteProps> = (props) => {
   const { anonymous, outlet } = props;
-  const userData = useAppSelector((state) => state.userDataReducer.userData);
+  const isAuthUser = !!getCookie('accessToken');
   const location = useLocation();
   const from = location.state?.from || '/';
 
-  if (anonymous && userData) {
+  if (anonymous && isAuthUser) {
     return <Navigate to={from} />;
   }
 
-  if (!anonymous && !userData) {
+  if (!anonymous && !isAuthUser) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
