@@ -30,7 +30,7 @@ import styles from './BurgerConstructor.module.css';
 import { IIngredientData } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import getCookie from '../../utils/getCookie';
-import getTotalCost from '../../utils/getTotalcost';
+import getTotalCost from '../../utils/getTotalCost';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation();
@@ -187,7 +187,7 @@ const BurgerConstructor: FC = () => {
         <div className={`${styles.burgerConstructor__checkout} mr-4`}>
           <div className={`${styles.totalPrice} mr-10`}>
             <span className="text text_type_digits-medium mr-2">
-              {getTotalCost(burgerConstructorIngredientsData)}
+              {getTotalCost(burgerConstructorIngredientsData, 2)}
             </span>
             <figure className={styles.currencyIcon}>
               <CurrencyIcon type="primary" />

@@ -1,10 +1,9 @@
 import { IBurgerConstructorIngredientData, IGetTotalCost, IIngredientData } from './types';
 
-const getTotalCost: IGetTotalCost = (ingredientsDataArray): number => {
-  const bunsCount = 2;
+const getTotalCost: IGetTotalCost = (ingredientsDataArray, bunsCount): number => {
   const totalCost = ingredientsDataArray.reduce(
     (sum: number, ingredientData: IIngredientData | IBurgerConstructorIngredientData) => {
-      if (ingredientData.type === 'bun') {
+      if (ingredientData.type === 'bun' && bunsCount > 1) {
         return sum + ingredientData.price * bunsCount;
       }
       return sum + ingredientData.price;
