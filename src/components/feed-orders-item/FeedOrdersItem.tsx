@@ -57,7 +57,7 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
         <div className={styles.footer}>
           <ul className={styles.ingredientsList}>
             {orderIngredientsData &&
-              orderIngredientsData[0] &&
+              orderIngredientsData.length > 0 &&
               (orderIngredientsData as IIngredientData[]).map((ingredientData, index, array) => {
                 if (index < 5) {
                   return (
@@ -100,7 +100,7 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
           <div className={styles.totalCost}>
             <span className="text text_type_digits-default">
               {orderIngredientsData &&
-                orderIngredientsData[0] &&
+                orderIngredientsData.length > 0 &&
                 getTotalCost(orderIngredientsData as IBurgerConstructorIngredientData[], 1)}
             </span>
             <CurrencyIcon type="primary" />

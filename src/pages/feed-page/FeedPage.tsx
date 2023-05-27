@@ -18,7 +18,7 @@ const FeedPage: FC = () => {
   if (isError) content = <h4>An error has occurred with orders data!</h4>;
   if (isLoading || isFetching) content = <LoadingSpinner />;
   if (isSuccess) {
-    content = allOrdersData?.orders[0] && (
+    content = allOrdersData && allOrdersData?.orders.length > 0 && (
       <>
         <FeedOrders />
         <FeedInfo />
