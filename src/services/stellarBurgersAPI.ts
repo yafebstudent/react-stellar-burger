@@ -17,7 +17,8 @@ export const stellarBurgersAPI = createApi({
         method: 'POST',
         body: payload,
         headers: {
-          'Content-type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json; charset=UTF-8',
+          Authorization: `Bearer ${getCookie('accessToken') || ''}`,
         },
       }),
     }),

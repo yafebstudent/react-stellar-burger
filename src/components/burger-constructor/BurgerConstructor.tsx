@@ -205,7 +205,13 @@ const BurgerConstructor: FC = () => {
         </div>
         {isModalOpen && (
           <Modal isModalOpen={isModalOpen} closeModal={modalCloseHandler}>
-            {isLoading ? <LoadingSpinner /> : <OrderDetails />}
+            {isLoading ? (
+              <div style={{ minWidth: '720px' }}>
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <OrderDetails />
+            )}
           </Modal>
         )}
       </section>

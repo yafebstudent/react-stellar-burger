@@ -7,7 +7,7 @@ import RegisterPage from '../../pages/register-page/RegisterPage';
 import ResetPasswordPage from '../../pages/reset-password-page/ResetPasswordPage';
 import ForgotPasswordPage from '../../pages/forgot-password-page/ForgotPasswordPage';
 import Page404 from '../../pages/page-404/Page404';
-import Profile from '../../pages/profile-page/Profile';
+import ProfilePage from '../../pages/profile-page/ProfilePage';
 import ProtectedRouteElement from '../protected-route-element/ProtectedRouteElement';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../Modal/Modal';
@@ -16,6 +16,8 @@ import useModal from '../../hooks/useModal';
 import { useAppDispatch } from '../../hooks/hooks';
 import FeedPage from '../../pages/feed-page/FeedPage';
 import FeedOrderItemDetails from '../feed-order-item-details/FeedOrderItemDetails';
+import UserOrders from '../user-orders/UserOrders';
+import Profile from '../profile/Profile';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -37,9 +39,10 @@ const App: FC = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/profile"
-          element={<ProtectedRouteElement outlet={<Profile />} anonymous={false} />}
+          element={<ProtectedRouteElement outlet={<ProfilePage />} anonymous={false} />}
         >
-          <Route path="/profile/orders" element={<main>{null}</main>} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/orders" element={<UserOrders />} />
         </Route>
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/feed" element={<FeedPage />} />
