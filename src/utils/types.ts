@@ -14,7 +14,7 @@ export interface IIngredientData {
   _id: string;
 }
 export interface IBurgerConstructorIngredientData extends IIngredientData {
-  listKey: string;
+  listKey?: string;
 }
 export interface IBurgerConstructorIngredientsDataState {
   burgerConstructorIngredientsData: IBurgerConstructorIngredientData[];
@@ -77,3 +77,27 @@ interface ISetCookieProps {
   expires?: number | Date | string;
 }
 export type TSetCookie = (tokenName: string, value: string, props?: ISetCookieProps) => void;
+export interface IOrderData {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+}
+export type TGetAllOrdersDataQuery = {
+  orders: IOrderData[];
+  success: boolean;
+  total: number;
+  totalToday: number;
+} | null;
+export interface IFeedOrdersItemProps {
+  orderData: IOrderData;
+  isOrderStatusDisplay: boolean;
+}
+export type IGetTotalCost = (
+  ingredientsDataArray: IBurgerConstructorIngredientData[],
+  bunsCount: 1 | 2
+) => number;
+export type IIsOrderWithStatus = (allOrdersData: IOrderData[], status: string) => boolean;

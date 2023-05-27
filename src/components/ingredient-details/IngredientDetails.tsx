@@ -37,8 +37,9 @@ const IngredientDetails: FC = () => {
       <>
         <p
           style={{ textAlign: id ? 'center' : 'left' }}
-          className={`${styles.ingredientDetails__title} text text_type_main-large ${id ? '' : 'mt-10 ml-10'
-            }`}
+          className={`${styles.ingredientDetails__title}
+          text text_type_main-large
+          ${id ? '' : 'mt-10 ml-10'}`}
         >
           Детали ингредиента
         </p>

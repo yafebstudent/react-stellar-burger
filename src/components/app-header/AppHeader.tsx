@@ -25,10 +25,7 @@ const AppHeader: FC = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/profile/orders"
-              className={`${styles.navbarList__link} pt-4 pr-5 pb-4 pl-5`}
-            >
+            <NavLink to="/feed" className={`${styles.navbarList__link} pt-4 pr-5 pb-4 pl-5`}>
               <ListIcon type="secondary" />
               <span className="text text_type_main-default ml-2">Лента заказов</span>
             </NavLink>

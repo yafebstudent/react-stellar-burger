@@ -14,6 +14,7 @@ import Modal from '../Modal/Modal';
 import { clearActiveIngredientData } from '../../services/slices/activeIngredientDataSlice';
 import useModal from '../../hooks/useModal';
 import { useAppDispatch } from '../../hooks/hooks';
+import FeedPage from '../../pages/feed-page/FeedPage';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ const App: FC = () => {
           <Route path="/profile/orders" element={<main>{null}</main>} />
         </Route>
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
+        <Route path="/feed" element={<FeedPage />} />
         <Route path="*" element={<Page404 />} />
       </Route>
       {background && (

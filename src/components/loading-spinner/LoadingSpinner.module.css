@@ -1,6 +1,6 @@
 .loadingSpinnerWrapper {
   width: 100%;
-  height: 100%;
+  height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;

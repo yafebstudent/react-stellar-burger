@@ -1,0 +1,25 @@
+.feedOrders {
+  width: 600px;
+}
+.feedOrders__list {
+  max-height: 825px;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.feedOrders__list::-webkit-scrollbar {
+  width: 8px;
+  height: 664px;
+  background-color: rgba(47, 47, 55, 1);
+}
+.feedOrders__list::-webkit-scrollbar-thumb {
+  height: 492px;
+  background-color: rgba(133, 133, 173, 1);
+}
+.feedOrders__list::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(99, 99, 128);
+}
