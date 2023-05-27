@@ -1,10 +1,10 @@
-import { IBurgerConstructorIngredientData, IGetTotalCost, IIngredientData } from './types';
+import { IBurgerConstructorIngredientData, TGetTotalCost, IIngredientData } from './types';
 
-const getTotalCost: IGetTotalCost = (ingredientsDataArray, bunsCount): number => {
+const getTotalCost: TGetTotalCost = (ingredientsDataArray, bunPriceMultiplier): number => {
   const totalCost = ingredientsDataArray.reduce(
     (sum: number, ingredientData: IIngredientData | IBurgerConstructorIngredientData) => {
-      if (ingredientData.type === 'bun' && bunsCount > 1) {
-        return sum + ingredientData.price * bunsCount;
+      if (ingredientData.type === 'bun' && bunPriceMultiplier > 1) {
+        return sum + ingredientData.price * bunPriceMultiplier;
       }
       return sum + ingredientData.price;
     },
