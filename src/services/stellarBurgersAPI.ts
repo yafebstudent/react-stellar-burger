@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import baseUrl from '../utils/apiConstants';
+import { baseUrl } from '../utils/apiConstants';
 import { setUser } from './slices/userDataSlice';
 import { IGetIngredientsDataMitation, IGetIngredientsDataQuery } from '../utils/types';
 import getCookie from '../utils/getCookie';
 
 export const stellarBurgersAPI = createApi({
+  reducerPath: 'stellarBurgersAPI',
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     getIngredientsData: build.query<IGetIngredientsDataQuery, void>({
