@@ -1,6 +1,6 @@
-import { IIsOrderWithStatus } from './types';
+import { TIsOrderWithStatus } from './types';
 
-const isOrderWithStatus: IIsOrderWithStatus = (allOrdersData, status) => {
+const isOrderWithStatus: TIsOrderWithStatus = (allOrdersData, status) => {
   return allOrdersData.findIndex((orderData) => orderData.status === status) !== -1;
 };
 

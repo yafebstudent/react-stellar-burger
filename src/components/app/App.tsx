@@ -15,6 +15,7 @@ import { clearActiveIngredientData } from '../../services/slices/activeIngredien
 import useModal from '../../hooks/useModal';
 import { useAppDispatch } from '../../hooks/hooks';
 import FeedPage from '../../pages/feed-page/FeedPage';
+import FeedOrderItemDetails from '../feed-order-item-details/FeedOrderItemDetails';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -42,6 +43,7 @@ const App: FC = () => {
         </Route>
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:id" element={<IngredientDetails />} />
         <Route path="*" element={<Page404 />} />
       </Route>
       {background && (
@@ -50,6 +52,16 @@ const App: FC = () => {
           element={
             <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
               <IngredientDetails />
+            </Modal>
+          }
+        />
+      )}
+      {background && (
+        <Route
+          path="/feed/:id"
+          element={
+            <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
+              <FeedOrderItemDetails />
             </Modal>
           }
         />

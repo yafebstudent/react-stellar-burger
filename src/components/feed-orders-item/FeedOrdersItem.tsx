@@ -10,27 +10,38 @@ import {
 import styles from './FeedOrdersItem.module.css';
 import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
 import getTotalCost from '../../utils/getTotalCost';
+import getOrderIngredientsData from '../../utils/getOrderIngredientsData';
+import { useAppDispatch } from '../../hooks/hooks';
+import { setActiveOrderData } from '../../services/slices/activeOrderDataSlice';
 
 const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
-  const { orderData, isOrderStatusDisplay } = props;
-  const { status, number: orderNumber, createdAt, name, ingredients: ingredientsID } = orderData;
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const { orderData, isOrderStatusDisplay, openModal } = props;
+  const { status, number: orderNumber, createdAt, name, ingredients: ingredientsID } = orderData;
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
-
   const orderIngredientsData = useMemo(() => {
-    if (ingredientsResponseData) {
-      return ingredientsID.map((ingredientID: string) =>
-        ingredientsResponseData.data.find((ingredientData) => ingredientData._id === ingredientID)
-      );
+    if (ingredientsID && ingredientsResponseData) {
+      return getOrderIngredientsData(ingredientsID, ingredientsResponseData.data);
     }
     return null;
-  }, [ingredientsResponseData, ingredientsID]);
+  }, [ingredientsID, ingredientsResponseData]);
+
+  const orderItemClickHandler = () => {
+    openModal();
+    dispatch(setActiveOrderData(orderData));
+  };
 
   return (
-    <li>
+    <li
+      onClick={orderItemClickHandler}
+      onKeyDown={orderItemClickHandler}
+      role="menuitem"
+      tabIndex={0}
+    >
       <Link
         className={styles.ordersItem}
-        to={`/feed/${orderNumber}`}
+        to={`${location.pathname}/${orderNumber}`}
         state={{ background: location }}
       >
         <div className={styles.headingLine}>
@@ -63,7 +74,7 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
                     </li>
                   );
                 }
-                if (index === 5) {
+                if (index === 5 && array.length > 6) {
                   return (
                     <li
                       className={`${styles.ingredientsList__item}`}
@@ -78,7 +89,7 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
                       <p
                         className={`${styles.remainIngredientsCount} text text_type_digits-default`}
                       >
-                        +{array.length - index + 1}
+                        +{array.length - 1 - index}
                       </p>
                     </li>
                   );
