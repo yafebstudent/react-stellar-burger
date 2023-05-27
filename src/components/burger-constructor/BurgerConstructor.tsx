@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, FC } from 'react';
+import React, { useCallback, FC } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -14,7 +14,10 @@ import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
 } from '../../services/stellarBurgersAPI';
-import { clearOrderDetailsData, setOrderDetailsData } from '../../services/slices/orderDetailsDataSlice';
+import {
+  clearOrderDetailsData,
+  setOrderDetailsData,
+} from '../../services/slices/orderDetailsDataSlice';
 import {
   addIngredientData,
   addSortedIngredients,
@@ -27,6 +30,7 @@ import styles from './BurgerConstructor.module.css';
 import { IIngredientData } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import getCookie from '../../utils/getCookie';
+import getTotalCost from '../../utils/getTotalcost';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation();
@@ -80,16 +84,7 @@ const BurgerConstructor: FC = () => {
       isHover: monitor.isOver(),
     }),
   });
-  const totalCost = useMemo(() => {
-    const bunsCount = 2;
 
-    return burgerConstructorIngredientsData.reduce((sum: number, ingredientData) => {
-      if (ingredientData.type === 'bun') {
-        return sum + ingredientData.price * bunsCount;
-      }
-      return sum + ingredientData.price;
-    }, 0);
-  }, [burgerConstructorIngredientsData]);
   const swapIngredients = useCallback(
     (dragIndex, hoverIndex) => {
       const dragItem = burgerConstructorIngredientsData[dragIndex];
@@ -191,7 +186,9 @@ const BurgerConstructor: FC = () => {
         </ul>
         <div className={`${styles.burgerConstructor__checkout} mr-4`}>
           <div className={`${styles.totalPrice} mr-10`}>
-            <span className="text text_type_digits-medium mr-2">{totalCost}</span>
+            <span className="text text_type_digits-medium mr-2">
+              {getTotalCost(burgerConstructorIngredientsData)}
+            </span>
             <figure className={styles.currencyIcon}>
               <CurrencyIcon type="primary" />
             </figure>
