@@ -40,6 +40,7 @@ const ProfilePage: FC = () => {
               className="text text_type_main-medium"
               style={setLinkActiveStyle}
               to="/profile"
+              end
             >
               Профиль
             </NavLink>
