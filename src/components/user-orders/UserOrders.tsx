@@ -30,21 +30,26 @@ const UserOrders: FC = () => {
     window.history.replaceState(null, '', location.pathname);
   };
 
-  if (isError) content = <h4>An error has occurred with orders data!</h4>;
+  if (isError || (userOrdersData && !userOrdersData.success))
+    content = <p className="text text_type_main-medium">An error has occurred with orders data!</p>;
   if (isLoading || isFetching) content = <LoadingSpinner />;
-  if (isSuccess && userOrdersData && userOrdersData.orders.length > 0) {
-    content = (
-      <>
-        {userOrdersData.orders.map((orderData, index) => (
-          <FeedOrdersItem
-            orderData={orderData}
-            isOrderStatusDisplay
-            key={index}
-            openModal={openModal}
-          />
-        ))}
-      </>
-    );
+  if (isSuccess && userOrdersData && userOrdersData.success) {
+    if (userOrdersData.orders.length > 0) {
+      content = (
+        <>
+          {userOrdersData.orders.map((orderData, index) => (
+            <FeedOrdersItem
+              orderData={orderData}
+              isOrderStatusDisplay
+              key={index}
+              openModal={openModal}
+            />
+          ))}
+        </>
+      );
+    } else {
+      content = <p className="text text_type_main-medium">У вас нет совершенных заказов</p>;
+    }
   }
 
   return (
