@@ -35,25 +35,29 @@ const FeedOrderItemDetails: FC = () => {
       <p className="text text_type_main-medium  mt-15">Состав:</p>
       <ul className={styles.ingredientsList}>
         {orderIngredientsData &&
-          orderIngredientsData.map((ingredientData, index) => {
-            return (
-              <li className={styles.ingredientsList__item} key={index}>
-                <img
-                  className={styles.ingredientImage}
-                  src={ingredientData.image_mobile}
-                  alt={ingredientData.name}
-                />
-                <p className="text text_type_main-small ml-2">{ingredientData.name}</p>
-                <p className={`${styles.ingredientPrice} text text_type_digits-default`}>
-                  {
-                    orderIngredientsData.filter(
-                      (orderIngredientData) => orderIngredientData._id === ingredientData._id
-                    ).length
-                  }
-                  &nbsp;x {ingredientData.price} <CurrencyIcon type="primary" />
-                </p>
-              </li>
-            );
+          orderIngredientsData.map((ingredientsListItemData, index, array) => {
+            if (index <= array.findIndex((item) => item._id === ingredientsListItemData._id)) {
+              return (
+                <li className={styles.ingredientsList__item} key={index}>
+                  <img
+                    className={styles.ingredientImage}
+                    src={ingredientsListItemData.image_mobile}
+                    alt={ingredientsListItemData.name}
+                  />
+                  <p className="text text_type_main-small ml-2">{ingredientsListItemData.name}</p>
+                  <p className={`${styles.ingredientPrice} text text_type_digits-default`}>
+                    {
+                      orderIngredientsData.filter(
+                        (orderIngredientData) =>
+                          orderIngredientData._id === ingredientsListItemData._id
+                      ).length
+                    }
+                    &nbsp;x {ingredientsListItemData.price} <CurrencyIcon type="primary" />
+                  </p>
+                </li>
+              );
+            }
+            return null;
           })}
       </ul>
       <div className={`${styles.footer} mt-10`}>
