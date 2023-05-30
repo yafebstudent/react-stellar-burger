@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Modal.module.css';
@@ -8,14 +8,17 @@ import { IModalProps } from '../../utils/types';
 
 const portal = document.getElementById('portal');
 const Modal: FC<IModalProps> = (props) => {
-  const { isModalOpen, closeModal, children } = props;
-  const activeModalClassName = isModalOpen ? styles.active : '';
+  const { isModalOpen, openModal, closeModal, children } = props;
   usePopupClose(isModalOpen, () => closeModal());
+
+  useEffect(() => {
+    openModal();
+  }, [openModal]);
 
   return createPortal(
     <>
       <div
-        className={`${styles.modalContent} ${activeModalClassName}`}
+        className={`${styles.modalContent}`}
         onClick={(event) => event.stopPropagation()}
         onKeyDown={(event) => event.stopPropagation()}
         role="menuitem"
@@ -26,7 +29,7 @@ const Modal: FC<IModalProps> = (props) => {
           <CloseIcon type="primary" />
         </button>
       </div>
-      <ModalOverlay isModalOpen={isModalOpen} />
+      <ModalOverlay />
     </>,
     portal as HTMLDivElement
   );

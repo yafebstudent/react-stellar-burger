@@ -52,16 +52,7 @@ const UserOrders: FC = () => {
     }
   }
 
-  return (
-    <ul className={styles.list}>
-      {content}
-      {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
-          <FeedOrderItemDetails />
-        </Modal>
-      )}
-    </ul>
-  );
+  return <ul className={styles.list}>{content}</ul>;
 };
 
 export default UserOrders;

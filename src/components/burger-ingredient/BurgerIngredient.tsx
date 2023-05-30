@@ -10,9 +10,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const { ingredientData, openModal } = props;
+  const { ingredientData } = props;
   const burgerIngredientClickHandler = () => {
-    openModal();
     dispatch(setActiveIngredientData(ingredientData));
   };
   const [, dragElementRef] = useDrag({

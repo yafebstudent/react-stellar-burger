@@ -48,6 +48,7 @@ export interface IGetIngredientsDataMitation {
 export interface IModalProps {
   isModalOpen: boolean;
   closeModal: () => void;
+  openModal: () => void;
 }
 export interface IBurgerConstructorToppingElementProps {
   ingredientData: IBurgerConstructorIngredientData;
@@ -56,10 +57,6 @@ export interface IBurgerConstructorToppingElementProps {
 }
 export interface IBurgerIngredientProps {
   ingredientData: IIngredientData;
-  openModal: () => void;
-}
-export interface IModalOverlayProps {
-  isModalOpen: boolean;
 }
 export type TProtectedRouteProps = {
   anonymous: boolean;

@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 export default function usePopupClose(isOpen: boolean, closePopup: () => void) {
   useEffect(() => {
     if (!isOpen) return;
-
     const handleOverlay = (event: MouseEvent) => {
-      if ((event.target as Element).classList.contains('popup_opened')) {
+      if ((event.target as Element).classList.contains('modalOpened')) {
         closePopup();
       }
     };

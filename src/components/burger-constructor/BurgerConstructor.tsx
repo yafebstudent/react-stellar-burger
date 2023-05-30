@@ -203,17 +203,6 @@ const BurgerConstructor: FC = () => {
             Оформить заказ
           </Button>
         </div>
-        {isModalOpen && (
-          <Modal isModalOpen={isModalOpen} closeModal={modalCloseHandler}>
-            {isLoading ? (
-              <div style={{ minWidth: '720px' }}>
-                <LoadingSpinner />
-              </div>
-            ) : (
-              <OrderDetails />
-            )}
-          </Modal>
-        )}
       </section>
     </DndProvider>
   );

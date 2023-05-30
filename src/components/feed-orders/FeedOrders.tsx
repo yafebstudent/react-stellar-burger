@@ -36,11 +36,6 @@ const FeedOrders: FC = () => {
           ))}
         </ul>
       )}
-      {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
-          <FeedOrderItemDetails />
-        </Modal>
-      )}
     </section>
   );
 };
