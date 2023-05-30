@@ -92,7 +92,6 @@ export type TGetAllOrdersDataQuery = {
 export interface IFeedOrdersItemProps {
   orderData: IOrderData;
   isOrderStatusDisplay: boolean;
-  openModal: () => void;
 }
 export type TGetTotalCost = (
   ingredientsDataArray: IBurgerConstructorIngredientData[],

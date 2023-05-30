@@ -18,6 +18,7 @@ import FeedPage from '../../pages/feed-page/FeedPage';
 import FeedOrderItemDetails from '../feed-order-item-details/FeedOrderItemDetails';
 import UserOrders from '../user-orders/UserOrders';
 import Profile from '../profile/Profile';
+import { clearOrderDetailsData } from '../../services/slices/orderDetailsDataSlice';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();

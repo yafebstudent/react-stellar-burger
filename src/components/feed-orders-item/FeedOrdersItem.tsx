@@ -17,7 +17,7 @@ import { setActiveOrderData } from '../../services/slices/activeOrderDataSlice';
 const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { orderData, isOrderStatusDisplay, openModal } = props;
+  const { orderData, isOrderStatusDisplay } = props;
   const { status, number: orderNumber, createdAt, name, ingredients: ingredientsID } = orderData;
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
   const orderIngredientsData = useMemo(() => {
@@ -28,7 +28,6 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
   }, [ingredientsID, ingredientsResponseData]);
 
   const orderItemClickHandler = () => {
-    openModal();
     dispatch(setActiveOrderData(orderData));
   };
 
