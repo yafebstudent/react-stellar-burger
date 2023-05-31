@@ -6,11 +6,11 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
-import store from './services/store';
+import { setupStore } from './services/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={setupStore()}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

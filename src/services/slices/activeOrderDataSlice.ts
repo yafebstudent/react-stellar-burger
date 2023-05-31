@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IOrderData } from '../../utils/types';
 
-const initialState: IOrderData = {
+export const initialState: IOrderData = {
   ingredients: [],
   _id: '',
   status: '',
