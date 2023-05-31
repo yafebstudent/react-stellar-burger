@@ -2,11 +2,7 @@
 import { FC, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  IBurgerConstructorIngredientData,
-  IFeedOrdersItemProps,
-  IIngredientData,
-} from '../../utils/types';
+import { IFeedOrdersItemProps, IIngredientData } from '../../utils/types';
 import styles from './FeedOrdersItem.module.css';
 import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
 import getTotalCost from '../../utils/getTotalCost';
@@ -19,13 +15,13 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
   const dispatch = useAppDispatch();
   const { orderData, isOrderStatusDisplay } = props;
   const { status, number: orderNumber, createdAt, name, ingredients: ingredientsID } = orderData;
-  const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
+  const { data: ingredientsResponseData, isSuccess } = useGetIngredientsDataQuery();
   const orderIngredientsData = useMemo(() => {
-    if (ingredientsID && ingredientsResponseData) {
+    if (isSuccess && ingredientsID && ingredientsResponseData.success) {
       return getOrderIngredientsData(ingredientsID, ingredientsResponseData.data);
     }
     return null;
-  }, [ingredientsID, ingredientsResponseData]);
+  }, [isSuccess, ingredientsID, ingredientsResponseData]);
 
   const orderItemClickHandler = () => {
     dispatch(setActiveOrderData(orderData));
@@ -100,7 +96,7 @@ const FeedOrdersItem: FC<IFeedOrdersItemProps> = (props) => {
             <span className="text text_type_digits-default">
               {orderIngredientsData &&
                 orderIngredientsData.length > 0 &&
-                getTotalCost(orderIngredientsData as IBurgerConstructorIngredientData[], 1)}
+                getTotalCost(orderIngredientsData, 1)}
             </span>
             <CurrencyIcon type="primary" />
           </div>

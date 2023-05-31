@@ -10,7 +10,7 @@ const FeedOrders: FC = () => {
   return (
     <section className={styles.feedOrders}>
       <h1 className="mt-10 mb-5 text text_type_main-large">Лента заказов</h1>
-      {allOrdersData && allOrdersData.orders.length > 0 && (
+      {allOrdersData && allOrdersData.success && allOrdersData.orders.length > 0 && (
         <ul className={`${styles.feedOrders__list} mt-10 pt-6 pb-10 pr-4 pl-4`}>
           {allOrdersData?.orders?.map((orderData: IOrderData) => (
             <FeedOrdersItem

@@ -26,10 +26,15 @@ const App: FC = () => {
   const navigate = useNavigate();
   const background = location.state && location.state.background;
   const { isModalOpen, openModal, closeModal } = useModal();
-  const modalCloseButtonClickHandler = () => {
+  const handleIngredientModalClose = () => {
     closeModal();
     navigate(-1);
     dispatch(clearActiveIngredientData());
+  };
+  const handleOrderModalClose = () => {
+    closeModal();
+    navigate(-1);
+    dispatch(clearOrderDetailsData());
   };
 
   return (
@@ -48,9 +53,10 @@ const App: FC = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/orders" element={<UserOrders />} />
           </Route>
+          <Route path="/profile/orders/:id" element={<FeedOrderItemDetails />} />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="/feed" element={<FeedPage />} />
-          <Route path="/feed/:id" element={<IngredientDetails />} />
+          <Route path="/feed/:id" element={<FeedOrderItemDetails />} />
           <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
@@ -62,24 +68,38 @@ const App: FC = () => {
               <Modal
                 isModalOpen={isModalOpen}
                 openModal={openModal}
-                closeModal={modalCloseButtonClickHandler}
+                closeModal={handleIngredientModalClose}
               >
                 <IngredientDetails />
               </Modal>
             }
           />
+          <Route
+            path="feed/:id"
+            element={
+              <Modal
+                isModalOpen={isModalOpen}
+                openModal={openModal}
+                closeModal={handleOrderModalClose}
+              >
+                <FeedOrderItemDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="profile/orders/:id"
+            element={
+              <Modal
+                isModalOpen={isModalOpen}
+                openModal={openModal}
+                closeModal={handleOrderModalClose}
+              >
+                <FeedOrderItemDetails />
+              </Modal>
+            }
+          />
         </Routes>
       )}
-      {/* {background && (
-        <Route
-          path="/feed/:id"
-          element={
-            <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
-              <FeedOrderItemDetails />
-            </Modal>
-          }
-        />
-      )} */}
     </>
   );
 };

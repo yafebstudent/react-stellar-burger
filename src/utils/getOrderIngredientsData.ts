@@ -4,12 +4,21 @@ const getOrderIngredientsData: TGetOrderIngredientsData = (
   ingredientsIDArray,
   ingredientsDataArray
 ) => {
-  return ingredientsIDArray.map(
-    (ingredientID: string) =>
-      ingredientsDataArray.find(
-        (ingredientData) => ingredientData._id === ingredientID
-      ) as IIngredientData
-  );
+  const orderIngredientsData: IIngredientData[] = [];
+
+  ingredientsIDArray.forEach((ingredientID) => {
+    if (ingredientID) {
+      const ingredientData = ingredientsDataArray.find(
+        (ingredientDataItem) => ingredientDataItem._id === ingredientID
+      );
+
+      if (ingredientData) {
+        orderIngredientsData.push(ingredientData);
+      }
+    }
+  });
+
+  return orderIngredientsData;
 };
 
 export default getOrderIngredientsData;

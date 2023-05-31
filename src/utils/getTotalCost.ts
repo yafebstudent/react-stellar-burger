@@ -6,6 +6,7 @@ const getTotalCost: TGetTotalCost = (ingredientsDataArray, bunPriceMultiplier): 
       if (ingredientData.type === 'bun' && bunPriceMultiplier > 1) {
         return sum + ingredientData.price * bunPriceMultiplier;
       }
+
       return sum + ingredientData.price;
     },
     0
