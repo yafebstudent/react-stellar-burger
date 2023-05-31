@@ -1,0 +1,7 @@
+.feed {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin: 0 auto;
+}

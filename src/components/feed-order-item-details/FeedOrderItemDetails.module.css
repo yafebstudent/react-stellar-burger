@@ -1,0 +1,64 @@
+.feedOrderItemDetails {
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0 auto;
+}
+.ingredientsList {
+  width: 620px;
+  height: 312px;
+  overflow-y: auto;
+  padding-left: 0px;
+  margin: 24px 0 0 0;
+}
+.ingredientsList::-webkit-scrollbar {
+  width: 12px;
+}
+.ingredientsList::-webkit-scrollbar {
+  width: 8px;
+  height: 464px;
+  background-color: rgba(47, 47, 55, 1);
+}
+.ingredientsList::-webkit-scrollbar-thumb {
+  height: 292px;
+  background-color: rgba(133, 133, 173, 1);
+}
+.ingredientsList::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: rgb(99, 99, 128);
+}
+.ingredientImage {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  background: linear-gradient(#1C1C21, #1C1C21) padding-box,
+              linear-gradient(45deg, #801AB2, #4C4CFF) border-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  object-fit: cover
+}
+.status {
+  color: #00CCCC;
+}
+.ingredientsList__item {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 24px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+.ingredientPrice {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  margin-right: 8px;
+  vertical-align: top;
+}
+.totalCost {
+  display: flex;
+  gap: 4px;
+}

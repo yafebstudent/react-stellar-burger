@@ -3,16 +3,15 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './BurgerIngredient.module.css';
-import { setActiveIngredientData } from '../../services/activeIngredientDataSlice';
+import { setActiveIngredientData } from '../../services/slices/activeIngredientDataSlice';
 import { IBurgerIngredientProps } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 const BurgerIngredient: FC<IBurgerIngredientProps> = (props) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const { ingredientData, openModal } = props;
+  const { ingredientData } = props;
   const burgerIngredientClickHandler = () => {
-    openModal();
     dispatch(setActiveIngredientData(ingredientData));
   };
   const [, dragElementRef] = useDrag({

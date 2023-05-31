@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, FC } from 'react';
+import React, { useCallback, FC } from 'react';
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -7,26 +7,30 @@ import {
 import { useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../order-details/OrderDetails';
-import useModal from '../../hooks/useModal';
 import {
   useGetIngredientsDataQuery,
   useGetOrderDataMutation,
 } from '../../services/stellarBurgersAPI';
-import { clearOrderDetailsData, setOrderDetailsData } from '../../services/orderDetailsDataSlice';
+import {
+  clearOrderDetailsData,
+  setOrderDetailsData,
+} from '../../services/slices/orderDetailsDataSlice';
 import {
   addIngredientData,
   addSortedIngredients,
   clearBurgerConstructor,
-} from '../../services/burgerConstructorIngredientsDataSlice';
+} from '../../services/slices/burgerConstructorIngredientsDataSlice';
 import burgerIcon from '../../images/burger.png';
-import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 import BurgerConstructorToppingElement from '../burger-constructor-topping-element/BurgerConstructorToppingElement';
 import styles from './BurgerConstructor.module.css';
 import { IIngredientData } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import getCookie from '../../utils/getCookie';
+import getTotalCost from '../../utils/getTotalCost';
+import LoadingSpinner from '../loading-spinner/LoadingSpinner';
+import OrderDetails from '../order-details/OrderDetails';
+import useModal from '../../hooks/useModal';
+import Modal from '../Modal/Modal';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation();
@@ -61,10 +65,6 @@ const BurgerConstructor: FC = () => {
       navigate('/login', { state: { from: location } });
     }
   };
-  const modalCloseHandler = () => {
-    closeModal();
-    dispatch(clearOrderDetailsData());
-  };
   const getIngredientDataById = (id: string) =>
     ingredientsResponseData?.data.find((ingredientData) => ingredientData._id === id);
   const [{ isHover: isConstructorHover }, constructorRef] = useDrop({
@@ -80,16 +80,7 @@ const BurgerConstructor: FC = () => {
       isHover: monitor.isOver(),
     }),
   });
-  const totalCost = useMemo(() => {
-    const bunsCount = 2;
 
-    return burgerConstructorIngredientsData.reduce((sum: number, ingredientData) => {
-      if (ingredientData.type === 'bun') {
-        return sum + ingredientData.price * bunsCount;
-      }
-      return sum + ingredientData.price;
-    }, 0);
-  }, [burgerConstructorIngredientsData]);
   const swapIngredients = useCallback(
     (dragIndex, hoverIndex) => {
       const dragItem = burgerConstructorIngredientsData[dragIndex];
@@ -114,6 +105,11 @@ const BurgerConstructor: FC = () => {
       burgerConstructorIngredientsData.filter((ingredientData) => ingredientData.type === 'bun')
         .length > 0
     );
+  };
+
+  const modalCloseHandler = () => {
+    closeModal();
+    dispatch(clearOrderDetailsData());
   };
 
   return (
@@ -191,7 +187,9 @@ const BurgerConstructor: FC = () => {
         </ul>
         <div className={`${styles.burgerConstructor__checkout} mr-4`}>
           <div className={`${styles.totalPrice} mr-10`}>
-            <span className="text text_type_digits-medium mr-2">{totalCost}</span>
+            <span className="text text_type_digits-medium mr-2">
+              {getTotalCost(burgerConstructorIngredientsData, 2)}
+            </span>
             <figure className={styles.currencyIcon}>
               <CurrencyIcon type="primary" />
             </figure>
@@ -200,15 +198,21 @@ const BurgerConstructor: FC = () => {
             htmlType="button"
             type="primary"
             size="medium"
-            onClick={() => orderButtonClickHandler()}
+            onClick={orderButtonClickHandler}
             disabled={!isBunsInBurgerConstructor()}
           >
             Оформить заказ
           </Button>
         </div>
         {isModalOpen && (
-          <Modal isModalOpen={isModalOpen} closeModal={modalCloseHandler}>
-            {isLoading ? <LoadingSpinner /> : <OrderDetails />}
+          <Modal isModalOpen={isModalOpen} openModal={openModal} closeModal={modalCloseHandler}>
+            {isLoading ? (
+              <div style={{ minWidth: '720px' }}>
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <OrderDetails />
+            )}
           </Modal>
         )}
       </section>

@@ -14,7 +14,28 @@ export interface IIngredientData {
   _id: string;
 }
 export interface IBurgerConstructorIngredientData extends IIngredientData {
-  listKey: string;
+  listKey?: string;
+}
+export interface IBurgerConstructorIngredientsDataState {
+  burgerConstructorIngredientsData: IBurgerConstructorIngredientData[];
+}
+export interface IOrderDetailsDataState {
+  name: string;
+  order: {
+    number: number;
+  };
+  success: boolean;
+}
+export interface IUserDataState {
+  userData: {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+    user: {
+      email: string;
+      name: string;
+    };
+  } | null;
 }
 export interface IGetIngredientsDataQuery {
   data: IIngredientData[];
@@ -27,6 +48,7 @@ export interface IGetIngredientsDataMitation {
 export interface IModalProps {
   isModalOpen: boolean;
   closeModal: () => void;
+  openModal: () => void;
 }
 export interface IBurgerConstructorToppingElementProps {
   ingredientData: IBurgerConstructorIngredientData;
@@ -35,10 +57,6 @@ export interface IBurgerConstructorToppingElementProps {
 }
 export interface IBurgerIngredientProps {
   ingredientData: IIngredientData;
-  openModal: () => void;
-}
-export interface IModalOverlayProps {
-  isModalOpen: boolean;
 }
 export type TProtectedRouteProps = {
   anonymous: boolean;
@@ -56,3 +74,31 @@ interface ISetCookieProps {
   expires?: number | Date | string;
 }
 export type TSetCookie = (tokenName: string, value: string, props?: ISetCookieProps) => void;
+export interface IOrderData {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+}
+export type TGetAllOrdersDataQuery = {
+  orders: IOrderData[];
+  success: boolean;
+  total: number;
+  totalToday: number;
+} | null;
+export interface IFeedOrdersItemProps {
+  orderData: IOrderData;
+  isOrderStatusDisplay: boolean;
+}
+export type TGetTotalCost = (
+  ingredientsDataArray: IBurgerConstructorIngredientData[],
+  bunPriceMultiplier: 1 | 2
+) => number;
+export type TIsOrderWithStatus = (allOrdersData: IOrderData[], status: string) => boolean;
+export type TGetOrderIngredientsData = (
+  ingredientsIDArray: string[],
+  ingredientsDataArray: IIngredientData[]
+) => IIngredientData[];

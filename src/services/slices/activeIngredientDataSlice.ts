@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IIngredientData } from '../../utils/types';
 
-const activeIngredientInitialData = {
+const activeIngredientInitialData: IIngredientData = {
   calories: 0,
   carbohydrates: 0,
   fat: 0,
@@ -9,7 +10,7 @@ const activeIngredientInitialData = {
   image_mobile: '',
   name: '',
   price: 0,
-  proteins: '',
+  proteins: 0,
   type: '',
   uuid: '',
   __v: '',

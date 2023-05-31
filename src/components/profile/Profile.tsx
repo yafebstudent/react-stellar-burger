@@ -1,29 +1,18 @@
 /* eslint-disable no-console */
-import React, { useCallback, useEffect, useState, FC } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Input,
   Button,
   EmailInput,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Profile.module.css';
-import setLinkActiveStyle from '../../utils/setLinkActiveStyle';
-import {
-  useGetUserDataQuery,
-  useLogOutMutation,
-  useUpdateUserDataMutation,
-} from '../../services/stellarBurgersAPI';
-import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
-import { clearUserData } from '../../services/userDataSlice';
-import { useAppDispatch } from '../../hooks/hooks';
 import getCookie from '../../utils/getCookie';
-import removeCookie from '../../utils/removeCookie';
+import { useGetUserDataQuery, useUpdateUserDataMutation } from '../../services/stellarBurgersAPI';
+import LoadingSpinner from '../loading-spinner/LoadingSpinner';
 
-const Profile: FC = () => {
+const Profile = () => {
   let content;
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const {
     data: userDataResponseData,
     isLoading,
@@ -33,7 +22,6 @@ const Profile: FC = () => {
     refetch,
   } = useGetUserDataQuery(getCookie('accessToken') || '');
   const [updateUserData] = useUpdateUserDataMutation();
-  const [logOut] = useLogOutMutation();
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -83,24 +71,6 @@ const Profile: FC = () => {
       })
       .catch((error) => console.error(error));
   };
-  const logOutHandler = useCallback(
-    (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      logOut()
-        .then((data) => {
-          if ('data' in data) {
-            console.log(data.data.message);
-          }
-          removeCookie('refreshToken');
-          removeCookie('accessToken');
-          dispatch(clearUserData());
-          navigate('/login', { replace: true });
-        })
-        .catch((error) => console.error(error));
-    },
-    [dispatch, logOut, navigate]
-  );
 
   useEffect(() => {
     if (isSuccess) {
@@ -171,46 +141,7 @@ const Profile: FC = () => {
     );
   }
 
-  return (
-    <main className={styles.main}>
-      <nav className={`${styles.navigation} mr-15`}>
-        <ul className={`${styles.navigation__list} mb-20`}>
-          <li className={styles.navigationListItem}>
-            <NavLink
-              className="text text_type_main-medium"
-              style={setLinkActiveStyle}
-              to="/profile"
-            >
-              Профиль
-            </NavLink>
-          </li>
-          <li className={styles.navigationListItem}>
-            <NavLink
-              className="text text_type_main-medium"
-              style={setLinkActiveStyle}
-              to="/profile/orders"
-            >
-              История заказов
-            </NavLink>
-          </li>
-          <li className={styles.navigationListItem}>
-            <NavLink
-              onClick={(event) => logOutHandler(event)}
-              className="text text_type_main-medium"
-              style={setLinkActiveStyle}
-              to="/login"
-            >
-              Выход
-            </NavLink>
-          </li>
-        </ul>
-        <p className={`${styles.text} text text_type_main-default text_color_inactive`}>
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </nav>
-      <ul className={styles.userDataList}>{content}</ul>
-    </main>
-  );
+  return <ul className={styles.userDataList}>{content}</ul>;
 };
 
 export default Profile;

@@ -1,28 +1,14 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useLocation } from 'react-router-dom';
 import styles from './BurgerIngredients.module.css';
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../ingredient-details/IngredientDetails';
-import useModal from '../../hooks/useModal';
 import { useGetIngredientsDataQuery } from '../../services/stellarBurgersAPI';
-import { clearActiveIngredientData } from '../../services/activeIngredientDataSlice';
 import getCurrentTabName from './getCurrentTabName';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
-import { useAppDispatch } from '../../hooks/hooks';
 
 const BurgerIngredients: FC = () => {
-  const dispatch = useAppDispatch();
-  const location = useLocation();
   const [currentTab, setCurrentTab] = useState('buns');
-  const { isModalOpen, openModal, closeModal } = useModal();
   const { data: ingredientsResponseData } = useGetIngredientsDataQuery();
-  const modalCloseButtonClickHandler = () => {
-    closeModal();
-    dispatch(clearActiveIngredientData());
-    window.history.replaceState(null, '', location.pathname);
-  };
   const scrollHandler = () => {
     setCurrentTab(getCurrentTabName(styles.burgerIngredients__items) as string);
   };
@@ -53,11 +39,7 @@ const BurgerIngredients: FC = () => {
           {ingredientsResponseData?.data.map(
             (ingredientData) =>
               ingredientData.type === 'bun' && (
-                <BurgerIngredient
-                  key={ingredientData._id}
-                  ingredientData={ingredientData}
-                  openModal={openModal}
-                />
+                <BurgerIngredient key={ingredientData._id} ingredientData={ingredientData} />
               )
           )}
         </ul>
@@ -68,11 +50,7 @@ const BurgerIngredients: FC = () => {
           {ingredientsResponseData?.data.map(
             (ingredientData) =>
               ingredientData.type === 'sauce' && (
-                <BurgerIngredient
-                  key={ingredientData._id}
-                  ingredientData={ingredientData}
-                  openModal={openModal}
-                />
+                <BurgerIngredient key={ingredientData._id} ingredientData={ingredientData} />
               )
           )}
         </ul>
@@ -83,20 +61,11 @@ const BurgerIngredients: FC = () => {
           {ingredientsResponseData?.data.map(
             (ingredientData) =>
               ingredientData.type === 'main' && (
-                <BurgerIngredient
-                  key={ingredientData._id}
-                  ingredientData={ingredientData}
-                  openModal={openModal}
-                />
+                <BurgerIngredient key={ingredientData._id} ingredientData={ingredientData} />
               )
           )}
         </ul>
       </div>
-      {isModalOpen && (
-        <Modal isModalOpen={isModalOpen} closeModal={modalCloseButtonClickHandler}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </section>
   );
 };
