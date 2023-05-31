@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IBurgerConstructorIngredientsDataState, IIngredientData } from '../../utils/types';
 
-export const initialState: IBurgerConstructorIngredientsDataState = {
+export const burgerConstructorSliceInitialState: IBurgerConstructorIngredientsDataState = {
   burgerConstructorIngredientsData: [],
 };
 
 const burgerConstructorIngredientsDataSlice = createSlice({
   name: 'burgerConstructorIngredientsData',
-  initialState,
+  initialState: burgerConstructorSliceInitialState,
   reducers: {
     addIngredientData: (state, action) => {
       if (

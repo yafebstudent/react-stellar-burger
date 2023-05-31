@@ -5,20 +5,15 @@ import {
   deleteIngredientData,
   addSortedIngredients,
   clearBurgerConstructor,
+  burgerConstructorSliceInitialState,
 } from './burgerConstructorIngredientsDataSlice';
 
 describe('burgerConstructorIngredientsDataSlice state tests', () => {
-  const initialState = {
-    burgerConstructorIngredientsData: [],
-  };
-
   it('Should initial state', () => {
     const store = setupStore();
     const state = store.getState().burgerConstructorIngredientsDataReducer;
 
-    expect(state.burgerConstructorIngredientsData).toEqual(
-      initialState.burgerConstructorIngredientsData
-    );
+    expect(state).toEqual(burgerConstructorSliceInitialState);
   });
   describe('Ingredients data management', () => {
     const store = setupStore();
@@ -55,7 +50,7 @@ describe('burgerConstructorIngredientsDataSlice state tests', () => {
       store.dispatch(deleteIngredientData(mockIngredientData));
       state = store.getState().burgerConstructorIngredientsDataReducer;
 
-      expect(state).toEqual(initialState);
+      expect(state).toEqual(burgerConstructorSliceInitialState);
     });
 
     it('Add sorted ingredients data', () => {
@@ -78,6 +73,6 @@ describe('burgerConstructorIngredientsDataSlice state tests', () => {
     store.dispatch(clearBurgerConstructor());
     state = store.getState().burgerConstructorIngredientsDataReducer;
 
-    expect(state).toEqual(initialState);
+    expect(state).toEqual(burgerConstructorSliceInitialState);
   });
 });

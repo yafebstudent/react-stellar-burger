@@ -1,22 +1,16 @@
 import { setupStore } from '../store';
-import { setActiveOrderData, clearActiveOrderData } from './activeOrderDataSlice';
+import {
+  setActiveOrderData,
+  clearActiveOrderData,
+  activeOrderDataSliceInitialState,
+} from './activeOrderDataSlice';
 
 describe('activeOrderDataSlice state tests', () => {
-  const initialState = {
-    ingredients: [],
-    _id: '',
-    status: '',
-    number: 0,
-    createdAt: '',
-    updatedAt: '',
-    name: '',
-  };
-
-  it('Should initially null', () => {
+  it('Should initial state', () => {
     const store = setupStore();
     const state = store.getState().activeOrderDataReducer;
 
-    expect(state.activeOrderData).toEqual(initialState);
+    expect(state.activeOrderData).toEqual(activeOrderDataSliceInitialState);
   });
 
   it('Set a new active order data', () => {
@@ -46,6 +40,6 @@ describe('activeOrderDataSlice state tests', () => {
     store.dispatch(clearActiveOrderData());
     state = store.getState().activeOrderDataReducer;
 
-    expect(state.activeOrderData).toEqual(initialState);
+    expect(state.activeOrderData).toEqual(activeOrderDataSliceInitialState);
   });
 });

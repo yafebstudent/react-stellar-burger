@@ -1,15 +1,11 @@
 import { setupStore } from '../store';
-import { setOrderDetailsData, clearOrderDetailsData, orderDetailsInitialData } from './orderDetailsDataSlice';
+import {
+  setOrderDetailsData,
+  clearOrderDetailsData,
+  orderDetailsInitialData,
+} from './orderDetailsDataSlice';
 
 describe('orderDetailsDataReducer state tests', () => {
-  const initialState = {
-    name: '',
-    order: {
-      number: 0,
-    },
-    success: false,
-  };
-
   it('Should initial state', () => {
     const store = setupStore();
     const state = store.getState().orderDetailsDataReducer;
