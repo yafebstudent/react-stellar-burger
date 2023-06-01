@@ -18,15 +18,19 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["cypress", "@4tw/cypress-drag-drop"]
   },
   "include": [
     ".eslintrc.cjs",
     "src",
     "./declarations",
+    "cypress",
+    "cypress.config.ts",
   ],
-  "paths": {
-    "crypto": ["node_modules/crypto-browserify"],
-    "stream": ["node_modules/stream-browserify"]
-  }
+  "exclude": [
+    "node_modules",
+    "**/*.cy.tsx",
+    "**/*.cy.ts"
+  ]
 }

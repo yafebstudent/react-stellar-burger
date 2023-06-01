@@ -24,6 +24,7 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.1.10",
@@ -48,10 +49,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .tsx --ext .ts --ext .jsx --ext .js",
-    "cypress:open": "./node_modules/.bin/cypress open"
+    "test": "react-scripts test",
+    "test:e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [

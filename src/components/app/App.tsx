@@ -13,7 +13,7 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../Modal/Modal';
 import { clearActiveIngredientData } from '../../services/slices/activeIngredientDataSlice';
 import useModal from '../../hooks/useModal';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import FeedPage from '../../pages/feed-page/FeedPage';
 import FeedOrderItemDetails from '../feed-order-item-details/FeedOrderItemDetails';
 import UserOrders from '../user-orders/UserOrders';
@@ -36,7 +36,6 @@ const App: FC = () => {
     navigate(-1);
     dispatch(clearOrderDetailsData());
   };
-  useAppSelector((state) => console.log(state));
 
   return (
     <>
