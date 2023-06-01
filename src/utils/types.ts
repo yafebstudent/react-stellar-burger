@@ -12,6 +12,7 @@ export interface IIngredientData {
   uuid: string;
   __v: string;
   _id: string;
+  listKey?: string;
 }
 export interface IBurgerConstructorIngredientsDataState {
   burgerConstructorIngredientsData: IIngredientData[];

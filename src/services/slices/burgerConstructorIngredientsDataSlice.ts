@@ -22,12 +22,14 @@ const burgerConstructorIngredientsDataSlice = createSlice({
           ),
           {
             ...action.payload,
+            listKey: `${action.payload._id}${state.burgerConstructorIngredientsData.length}`,
           },
         ];
       }
       if (action.payload.type !== 'bun') {
         state.burgerConstructorIngredientsData.push({
           ...action.payload,
+          listKey: `${action.payload._id}${state.burgerConstructorIngredientsData.length}`,
         });
       }
     },

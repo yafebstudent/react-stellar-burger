@@ -139,7 +139,7 @@ const BurgerConstructor: FC = () => {
                       text={`${ingredientData.name} (верх)`}
                       price={ingredientData.price}
                       thumbnail={ingredientData.image_mobile}
-                      key={window.crypto.randomUUID()}
+                      key={`${ingredientData._id}up`}
                     />
                   )
               )
@@ -152,9 +152,9 @@ const BurgerConstructor: FC = () => {
                   ingredientData.type !== 'bun' && (
                     <BurgerConstructorToppingElement
                       ingredientData={ingredientData}
-                      key={window.crypto.randomUUID()}
                       index={index}
                       swapIngredients={swapIngredients}
+                      key={ingredientData.listKey}
                     />
                   )
               )}
@@ -179,7 +179,7 @@ const BurgerConstructor: FC = () => {
                       text={`${ingredientData.name} (низ)`}
                       price={ingredientData.price}
                       thumbnail={ingredientData.image_mobile}
-                      key={window.crypto.randomUUID()}
+                      key={`${ingredientData._id}bottom`}
                     />
                   )
               )
