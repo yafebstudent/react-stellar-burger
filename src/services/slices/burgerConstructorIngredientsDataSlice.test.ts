@@ -31,6 +31,7 @@ describe('burgerConstructorIngredientsDataSlice state tests', () => {
       uuid: 'uuid',
       __v: 'v',
       _id: 'id',
+      listKey: 'id0',
     };
 
     it('Add a new ingredient data', () => {
