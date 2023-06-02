@@ -1,5 +1,7 @@
 describe('Stellar burger constructor page test', () => {
   const burgerConstructorSelector = '[class^=BurgerConstructor_burgerConstructor]';
+  const modalCloseButtonSelector = '[class^=Modal_closeButton]';
+
   beforeEach(() => {
     cy.viewport(1920, 1024);
     cy.clearCookie('refreshToken');
@@ -9,7 +11,7 @@ describe('Stellar burger constructor page test', () => {
   it('should have ingredients and constructor sections', () => {
     cy.visit('/');
     cy.get('[class^=BurgerIngredients_burgerIngredients]').contains('Соберите бургер');
-    cy.get('[class^=BurgerConstructor_burgerConstructor]').contains('Оформить заказ');
+    cy.get(burgerConstructorSelector).contains('Оформить заказ');
   });
 
   it('ingredient details modal manage', () => {
@@ -17,9 +19,9 @@ describe('Stellar burger constructor page test', () => {
 
     openIngredientModal();
     cy.contains('Детали ингредиента');
-    cy.get('[class^=Modal_closeButton]').click();
+    cy.get(modalCloseButtonSelector).click();
     openIngredientModal();
-    cy.get('[class^=Modal_closeButton]').click(-50, -50, { force: true });
+    cy.get(modalCloseButtonSelector).click(-50, -50, { force: true });
   });
 
   it('should make a burger from the ingredients', () => {
@@ -58,7 +60,7 @@ describe('Stellar burger constructor page test', () => {
   });
 
   it('should display modal with loader', () => {
-    cy.wait(1000).get('button').contains('Оформить заказ').click();
+    cy.wait(2000).get('button').contains('Оформить заказ').click();
   });
 
   it('should display order details modal', () => {
@@ -70,7 +72,7 @@ describe('Stellar burger constructor page test', () => {
   });
 
   it('should close order details modal', () => {
-    cy.wait(500).get('[class^=Modal_closeButton]').click();
+    cy.wait(500).get(modalCloseButtonSelector).click();
     cy.get('[class^=OrderDetails_orderDetails]').and('not.exist');
   });
 });
