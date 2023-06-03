@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IOrderDetailsDataState } from '../../utils/types';
 
-const orderDetailsInitialData: IOrderDetailsDataState = {
+export const orderDetailsInitialData: IOrderDetailsDataState = {
   name: '',
   order: {
     number: 0,

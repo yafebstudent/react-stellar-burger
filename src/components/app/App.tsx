@@ -41,7 +41,7 @@ const App: FC = () => {
     <>
       <Routes location={background || location}>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<MainPage />} />
+          <Route index path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />

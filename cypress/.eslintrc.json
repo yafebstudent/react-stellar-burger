@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "cypress"
+  ],
+  "extends": [
+    "plugin:cypress/recommended"
+  ],
+  "compilerOptions": {
+    "types": ["cypress", "@4tw/cypress-drag-drop"]
+    }
+}

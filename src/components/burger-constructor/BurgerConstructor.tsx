@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useCallback, FC } from 'react';
 import {
   ConstructorElement,
@@ -138,7 +139,7 @@ const BurgerConstructor: FC = () => {
                       text={`${ingredientData.name} (верх)`}
                       price={ingredientData.price}
                       thumbnail={ingredientData.image_mobile}
-                      key={`${ingredientData.listKey}top`}
+                      key={`${ingredientData._id}up`}
                     />
                   )
               )
@@ -151,9 +152,9 @@ const BurgerConstructor: FC = () => {
                   ingredientData.type !== 'bun' && (
                     <BurgerConstructorToppingElement
                       ingredientData={ingredientData}
-                      key={ingredientData.listKey}
                       index={index}
                       swapIngredients={swapIngredients}
+                      key={ingredientData.listKey}
                     />
                   )
               )}
@@ -178,7 +179,7 @@ const BurgerConstructor: FC = () => {
                       text={`${ingredientData.name} (низ)`}
                       price={ingredientData.price}
                       thumbnail={ingredientData.image_mobile}
-                      key={`${ingredientData.listKey}bottom`}
+                      key={`${ingredientData._id}bottom`}
                     />
                   )
               )

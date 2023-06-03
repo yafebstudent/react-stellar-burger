@@ -1,39 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  IBurgerConstructorIngredientData,
-  IBurgerConstructorIngredientsDataState,
-} from '../../utils/types';
+import { IBurgerConstructorIngredientsDataState, IIngredientData } from '../../utils/types';
 
-const initialState: IBurgerConstructorIngredientsDataState = {
+export const burgerConstructorSliceInitialState: IBurgerConstructorIngredientsDataState = {
   burgerConstructorIngredientsData: [],
 };
 
 const burgerConstructorIngredientsDataSlice = createSlice({
   name: 'burgerConstructorIngredientsData',
-  initialState,
+  initialState: burgerConstructorSliceInitialState,
   reducers: {
     addIngredientData: (state, action) => {
       if (
         state.burgerConstructorIngredientsData.filter(
-          (ingredentData: IBurgerConstructorIngredientData) =>
-            ingredentData._id === action.payload._id
+          (ingredentData: IIngredientData) => ingredentData._id === action.payload._id
         ).length === 0 &&
         action.payload.type === 'bun'
       ) {
         state.burgerConstructorIngredientsData = [
           ...state.burgerConstructorIngredientsData.filter(
-            (ingredienData: IBurgerConstructorIngredientData) => ingredienData.type !== 'bun'
+            (ingredienData: IIngredientData) => ingredienData.type !== 'bun'
           ),
           {
             ...action.payload,
-            listKey: window.crypto.randomUUID(),
+            listKey: `${action.payload._id}${state.burgerConstructorIngredientsData.length}`,
           },
         ];
       }
       if (action.payload.type !== 'bun') {
         state.burgerConstructorIngredientsData.push({
           ...action.payload,
-          listKey: window.crypto.randomUUID(),
+          listKey: `${action.payload._id}${state.burgerConstructorIngredientsData.length}`,
         });
       }
     },

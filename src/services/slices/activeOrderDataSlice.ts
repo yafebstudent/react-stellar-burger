@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IOrderData } from '../../utils/types';
 
-const initialState: IOrderData = {
+export const activeOrderDataSliceInitialState: IOrderData = {
   ingredients: [],
   _id: '',
   status: '',
@@ -13,13 +13,13 @@ const initialState: IOrderData = {
 
 const activeOrderDataSlice = createSlice({
   name: 'activeOrderData',
-  initialState: { activeOrderData: initialState },
+  initialState: { activeOrderData: activeOrderDataSliceInitialState },
   reducers: {
     setActiveOrderData: (state, action) => {
       state.activeOrderData = action.payload;
     },
     clearActiveOrderData: (state) => {
-      state.activeOrderData = initialState;
+      state.activeOrderData = activeOrderDataSliceInitialState;
     },
   },
 });

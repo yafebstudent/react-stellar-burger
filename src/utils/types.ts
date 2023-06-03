@@ -12,12 +12,10 @@ export interface IIngredientData {
   uuid: string;
   __v: string;
   _id: string;
-}
-export interface IBurgerConstructorIngredientData extends IIngredientData {
   listKey?: string;
 }
 export interface IBurgerConstructorIngredientsDataState {
-  burgerConstructorIngredientsData: IBurgerConstructorIngredientData[];
+  burgerConstructorIngredientsData: IIngredientData[];
 }
 export interface IOrderDetailsDataState {
   name: string;
@@ -51,7 +49,7 @@ export interface IModalProps {
   openModal: () => void;
 }
 export interface IBurgerConstructorToppingElementProps {
-  ingredientData: IBurgerConstructorIngredientData;
+  ingredientData: IIngredientData;
   index: number;
   swapIngredients: (dragIndex: number, hoverIndex: number) => void;
 }
@@ -94,7 +92,7 @@ export interface IFeedOrdersItemProps {
   isOrderStatusDisplay: boolean;
 }
 export type TGetTotalCost = (
-  ingredientsDataArray: IBurgerConstructorIngredientData[],
+  ingredientsDataArray: IIngredientData[],
   bunPriceMultiplier: 1 | 2
 ) => number;
 export type TIsOrderWithStatus = (allOrdersData: IOrderData[], status: string) => boolean;
